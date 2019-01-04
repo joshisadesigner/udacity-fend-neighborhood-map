@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Hummus Bistro d&a",
+        "street": "Westerstraat 136",
+        "postal_code": "1015 MP",
+        "locality": "Amsterdam",
+        "country": "Netherlands",
+        "url": "https://dna-hummusbistro.com",
+        "location": {
+            "lat": 52.3784317,
+            "lng": 4.8826728
+        }
+    },
+    {
+        "name": "Bakers & Roasters",
+        "street": "Kadijksplein 16",
+        "postal_code": "1018 AC",
+        "locality": "Amsterdam",
+        "country": "Netherlands",
+        "url": "http://www.bakersandroasters.com",
+        "location": {
+            "lat": 52.35734799999999,
+            "lng": 4.8898908
+        }
+    },
+    {
+        "name": "Bakers & Roasters",
+        "street": "Gerard Douplein 8",
+        "postal_code": "1072 VE",
+        "locality": "Amsterdam",
+        "country": "Netherlands",
+        "url": "http://www.bakersandroasters.com",
+        "location": {
+            "lat": 52.3557886,
+            "lng": 4.8925617
+        }
+    },
+    {
+        "name": "The Happy Pig Pancake Shop",
+        "street": "Rosmarijnsteeg 12",
+        "postal_code": "1012 RP",
+        "locality": "Amsterdam",
+        "country": "Netherlands",
+        "url": "https://www.thehappypig.nl",
+        "location": {
+            "lat": 52.37039790000001,
+            "lng": 4.8892859
+        }
+    },
+    {
+        "name": "Casa Nostra",
+        "street": "Ceintuurbaan 233",
+        "postal_code": "1074 CW",
+        "locality": "Amsterdam",
+        "country": "Netherlands",
+        "url": "http://casanostrakitchen.nl/nuovosito/",
+        "location": {
+            "lat": 39.1156729,
+            "lng": -77.56474059999999
+        }
+    }
+]
