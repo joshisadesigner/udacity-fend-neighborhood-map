@@ -1,0 +1,13 @@
+.drawer {
+    margin: 15px;
+    width: 340px;
+    position: absolute;
+    z-index: 1;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+}

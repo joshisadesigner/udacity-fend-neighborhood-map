@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import locations from './data/locations.json';
 import MapDisplay from './components/MapDisplay';
-import './App.css';
+import './styles/main.scss';
 
 class App extends Component {
     state = {
@@ -15,7 +15,9 @@ class App extends Component {
         return (
             <div className="App">
                 <div className="drawer">
-                    <h1 className="drawer_title">Amsterdam Restaurants</h1>
+                    <div className="search-bar">
+                        <input type="text" placeholder="Search" />
+                    </div>
                 </div>
                 <div className="content">
                     <MapDisplay
