@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './App.css';
 import locations from './data/locations.json';
 import MapDisplay from './components/MapDisplay';
+import './App.css';
 
 class App extends Component {
     state = {
-        lat: 52.3693739,
-        lng: 4.8902479,
+        lat: 52.366274,
+        lng: 4.8852947,
         zoom: 14,
         all: locations
     };
@@ -14,15 +14,17 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <div>
-                    <h1>Amsterdam Restaurants</h1>
+                <div className="drawer">
+                    <h1 className="drawer_title">Amsterdam Restaurants</h1>
                 </div>
-                <MapDisplay
-                    lat={this.state.lat}
-                    lng={this.state.lng}
-                    zoom={this.state.zoom}
-                    locations={this.state.all}
-                />
+                <div className="content">
+                    <MapDisplay
+                        lat={this.state.lat}
+                        lng={this.state.lng}
+                        zoom={this.state.zoom}
+                        locations={this.state.all}
+                    />
+                </div>
             </div>
         );
     }
