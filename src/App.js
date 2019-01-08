@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import locations from './data/locations.json';
 import MapDisplay from './components/MapDisplay';
+import IconButton from './components/IconButton';
 import './styles/main.scss';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -23,19 +24,25 @@ class App extends Component {
         all: locations
     };
 
+    onClick = () => {
+        alert('it works!');
+    };
+
     render() {
         return (
             <div className="App">
                 <div className="drawer">
-                    <div className="search-bar">
+                    <div className="search">
                         <input type="text" placeholder="Search" />
-                        <button>
-                            <FontAwesomeIcon icon={faSearch} />
-                        </button>
+                        <IconButton
+                            className="search-button"
+                            onClick={this.onClick}
+                        />
                     </div>
-                    <button className="drawer-button">
-                        <FontAwesomeIcon icon={faBars} />
-                    </button>
+                    <IconButton
+                        className="drawer-button"
+                        onClick={this.onClick}
+                    />
                     <div className="list">
                         <ul>
                             <li className="item">
