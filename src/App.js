@@ -2,8 +2,18 @@ import React, { Component } from 'react';
 import locations from './data/locations.json';
 import MapDisplay from './components/MapDisplay';
 import './styles/main.scss';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import {
+    faSearch,
+    faBars,
+    faStar,
+    faStarHalfAlt,
+    faUtensilsAlt
+} from '@fortawesome/pro-solid-svg-icons';
+
+library.add(faSearch, faBars, faStar, faStarHalfAlt, faUtensilsAlt);
 
 class App extends Component {
     state = {
@@ -22,6 +32,56 @@ class App extends Component {
                         <button>
                             <FontAwesomeIcon icon={faSearch} />
                         </button>
+                    </div>
+                    <button className="drawer-button">
+                        <FontAwesomeIcon icon={faBars} />
+                    </button>
+                    <div className="list">
+                        <ul>
+                            <li className="item">
+                                <button className="item-button">
+                                    <div className="item-icon">
+                                        <FontAwesomeIcon icon={faUtensilsAlt} />
+                                    </div>
+                                    <div>
+                                        <h4 className="item-name">
+                                            Ciel Bleu Restaurant
+                                        </h4>
+                                        <p className="item-rate">
+                                            4.7
+                                            <FontAwesomeIcon icon={faStar} />
+                                            <FontAwesomeIcon icon={faStar} />
+                                            <FontAwesomeIcon icon={faStar} />
+                                            <FontAwesomeIcon icon={faStar} />
+                                            <FontAwesomeIcon
+                                                icon={faStarHalfAlt}
+                                            />
+                                        </p>
+                                    </div>
+                                </button>
+                            </li>
+                            <li className="item">
+                                <button className="item-button">
+                                    <div className="item-icon">
+                                        <FontAwesomeIcon icon={faUtensilsAlt} />
+                                    </div>
+                                    <div>
+                                        <h4 className="item-name">
+                                            Restaurant Zest - Craft Beer &amp;
+                                            Food
+                                        </h4>
+                                        <p className="item-rate">
+                                            4.7
+                                            <FontAwesomeIcon icon={faStar} />
+                                            <FontAwesomeIcon icon={faStar} />
+                                            <FontAwesomeIcon
+                                                icon={faStarHalfAlt}
+                                            />
+                                        </p>
+                                    </div>
+                                </button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div className="content">
