@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import locations from './data/locations.json';
 import MapDisplay from './components/MapDisplay';
 import './styles/main.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 class App extends Component {
     state = {
@@ -17,6 +19,9 @@ class App extends Component {
                 <div className="drawer">
                     <div className="search-bar">
                         <input type="text" placeholder="Search" />
+                        <button>
+                            <FontAwesomeIcon icon={faSearch} />
+                        </button>
                     </div>
                 </div>
                 <div className="content">

@@ -1,4 +1,15 @@
 .search-bar {
+    display: flex;
     padding: 15px;
     background: #006984;
+
+    button {
+        margin-left: 8px;
+        font-size: 18px;
+        border-radius: 19px;
+        padding: 0px 8px;
+        background: #30babd;
+        color: #fff;
+        // border-color: #29a0a2;
+    }
 }
