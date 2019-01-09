@@ -24,12 +24,12 @@
         }
     },
     {
-        "name": "Bakers & Roasters",
+        "name": "Brut de mer",
         "street": "Gerard Douplein 8",
         "postal_code": "1072 VE",
         "locality": "Amsterdam",
         "country": "Netherlands",
-        "url": "http://www.bakersandroasters.com",
+        "url": "http://brutdemer.nl",
         "location": {
             "lat": 52.3557886,
             "lng": 4.8925617
@@ -55,8 +55,8 @@
         "country": "Netherlands",
         "url": "http://casanostrakitchen.nl/nuovosito/",
         "location": {
-            "lat": 39.1156729,
-            "lng": -77.56474059999999
+            "lat": 52.3556343,
+            "lng": 4.90085
         }
     }
 ]
