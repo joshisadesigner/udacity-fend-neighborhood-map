@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { InfoWindow, Marker, Map, GoogleApiWrapper } from 'google-maps-react';
 
 const MAP_KEY = 'AIzaSyAVSL9eG92K3W19jt0uIpoxW_lZGPdxfJs';
+const YELP_CLIENT_ID = 'BgzFkNi_0LOSxCASuT4p0A';
+const YELP_API_KEY =
+    'OgJ3trZ3zn3X7sy8SGJ0i2jRGYHmOXWWRM3GGiWRLwmdSP5FgUGBRfH-kGBt8N_yAz6LW_I79mUpq3mfSMxkLZAxOzaL2genFozWRoQ5egDnh2D4f139vkHbKg85XHYx';
 
 class MapDisplay extends Component {
     state = {
