@@ -22,12 +22,24 @@ class MapDisplay extends Component {
             showingInfoWindow: true
         });
 
+    closeInfoWindow = () => {
+        if (this.state.showingInfoWindow) {
+            this.setState({
+                activeMarker: {},
+                activeMarkerProps: {},
+                showingInfoWindow: false
+            });
+        }
+    };
+
     mapReady = (props, map) => {
         this.setState({ map });
         this.updateMarkers(this.props.locations);
     };
 
     updateMarkers = locations => {
+        if (!locations) return;
+
         let markerProps = [];
         let markers = locations.map((location, index) => {
             let mProps = {
@@ -63,8 +75,6 @@ class MapDisplay extends Component {
 
         let amProps = this.state.activeMarkerProps;
 
-        console.log(amProps);
-
         return (
             <Map
                 role="application"
@@ -74,7 +84,7 @@ class MapDisplay extends Component {
                 zoom={this.props.zoom}
                 style={style}
                 initialCenter={center}
-                onclick={this.closeInfoWindow}
+                onClick={this.closeInfoWindow}
                 mapTypeControl={false}
             >
                 {this.state.markers.map((location, index) => (
@@ -90,9 +100,12 @@ class MapDisplay extends Component {
                 <InfoWindow
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
+                    onClose={this.closeInfoWindow}
                 >
-                    <h4>{amProps.name}</h4>
-                    <p>{amProps.url}</p>
+                    <div>
+                        <h4>{amProps.name}</h4>
+                        <p>{amProps.url}</p>
+                    </div>
                 </InfoWindow>
             </Map>
         );
