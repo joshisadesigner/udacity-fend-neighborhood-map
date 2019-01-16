@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { InfoWindow, Marker, Map, GoogleApiWrapper } from 'google-maps-react';
 
 const MAP_KEY = 'AIzaSyAVSL9eG92K3W19jt0uIpoxW_lZGPdxfJs';
-const YELP_CLIENT_ID = 'BgzFkNi_0LOSxCASuT4p0A';
-const YELP_API_KEY =
-    'OgJ3trZ3zn3X7sy8SGJ0i2jRGYHmOXWWRM3GGiWRLwmdSP5FgUGBRfH-kGBt8N_yAz6LW_I79mUpq3mfSMxkLZAxOzaL2genFozWRoQ5egDnh2D4f139vkHbKg85XHYx';
+const FQ_CLIENT = 'SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ';
+const FQ_SECRET = 'TUQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D';
+const FQ_VERSION = '20180115';
 
 class MapDisplay extends Component {
     state = {
@@ -18,19 +18,72 @@ class MapDisplay extends Component {
 
     componentdidMount = () => {};
 
-    onMarkerClick = (props, marker, e) =>
-        this.setState({
-            activeMarker: marker,
-            activeMarkerProps: props,
-            showingInfoWindow: true
+    getBusinessInfo = (props, data) => {
+        return data.response.venues.filter(
+            item =>
+                item.name.includes(props.name) || props.name.includes(item.name)
+        );
+    };
+
+    onMarkerClick = (props, marker, e) => {
+        let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&radius=100&ll=${
+            props.position.lat
+        },${props.position.lng}&llAcc=100`;
+        let headers = new Headers();
+        let request = new Request(url, {
+            method: 'GET',
+            headers
         });
+
+        let activeMarkerProps;
+
+        fetch(request)
+            .then(response => response.json())
+            .then(result => {
+                let restaurant = this.getBusinessInfo(props, result);
+                activeMarkerProps = {
+                    ...props,
+                    foursquare: restaurant[0]
+                };
+
+                if (activeMarkerProps.foursquare) {
+                    let url = `https://api.foursquare.com/v2/venues/${
+                        restaurant[0].id
+                    }/photos?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}`;
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(result => {
+                            activeMarkerProps = {
+                                ...activeMarkerProps,
+                                images: result.response.photos
+                            };
+
+                            this.setState({
+                                showingInfoWindow: true,
+                                activeMarker: marker,
+                                activeMarkerProps
+                            });
+                        });
+                } else {
+                    activeMarkerProps = {
+                        ...activeMarkerProps
+                    };
+
+                    this.setState({
+                        showingInfoWindow: true,
+                        activeMarker: marker,
+                        activeMarkerProps
+                    });
+                }
+            });
+    };
 
     closeInfoWindow = () => {
         if (this.state.showingInfoWindow) {
             this.setState({
+                showingInfoWindow: false,
                 activeMarker: {},
-                activeMarkerProps: {},
-                showingInfoWindow: false
+                activeMarkerProps: {}
             });
         }
     };
@@ -63,6 +116,17 @@ class MapDisplay extends Component {
         this.setState({ markers, markerProps });
     };
 
+    setAnimation = markerName => {
+        if (markerName === this.state.activeMarkerProps.name) {
+            console.log(
+                markerName + ' / EQUAL / ' + this.state.activeMarkerProps.name
+            );
+            return '1';
+        } else {
+            return '2';
+        }
+    };
+
     createMarker = (lat, lng) => <Marker position={{ lat: lat, lng: lng }} />;
 
     render = () => {
@@ -77,6 +141,8 @@ class MapDisplay extends Component {
         };
 
         let amProps = this.state.activeMarkerProps;
+
+        console.log('Rendering...');
 
         return (
             <Map
@@ -94,10 +160,12 @@ class MapDisplay extends Component {
                     <Marker
                         key={index}
                         position={location.location}
-                        animation={this.props.google.maps.Animation.DROP}
                         onClick={this.onMarkerClick}
                         name={this.state.markerProps[index].name}
                         url={this.state.markerProps[index].url}
+                        animation={this.setAnimation(
+                            this.state.markerProps[index].name
+                        )}
                     />
                 ))}
                 <InfoWindow
