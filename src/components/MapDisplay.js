@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { InfoWindow, Marker, Map, GoogleApiWrapper } from 'google-maps-react';
+import { InfoWindow, Map, GoogleApiWrapper } from 'google-maps-react';
+import Marker from './Marker';
 
 const MAP_KEY = 'AIzaSyAVSL9eG92K3W19jt0uIpoxW_lZGPdxfJs';
 const FQ_CLIENT = 'SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ';
@@ -55,7 +56,8 @@ class MapDisplay extends Component {
                         .then(result => {
                             activeMarkerProps = {
                                 ...activeMarkerProps,
-                                images: result.response.photos
+                                images: result.response.photos,
+                                animation: '1'
                             };
 
                             this.setState({
@@ -66,7 +68,8 @@ class MapDisplay extends Component {
                         });
                 } else {
                     activeMarkerProps = {
-                        ...activeMarkerProps
+                        ...activeMarkerProps,
+                        animation: '1'
                     };
 
                     this.setState({
@@ -143,6 +146,7 @@ class MapDisplay extends Component {
         let amProps = this.state.activeMarkerProps;
 
         console.log('Rendering...');
+        console.log(amProps);
 
         return (
             <Map
@@ -174,8 +178,23 @@ class MapDisplay extends Component {
                     onClose={this.closeInfoWindow}
                 >
                     <div>
-                        <h4>{amProps.name}</h4>
-                        <p>{amProps.url}</p>
+                        {amProps && amProps.name ? <h4>{amProps.name}</h4> : ''}
+                        {amProps && amProps.url ? <p>{amProps.url}</p> : ''}
+                        {amProps && amProps.images ? (
+                            <figure>
+                                <img
+                                    alt={amProps.name}
+                                    src={
+                                        amProps.images.items[0].prefix +
+                                        '100x100' +
+                                        amProps.images.items[0].suffix
+                                    }
+                                />
+                                <figcaption>Image from foursquare.</figcaption>
+                            </figure>
+                        ) : (
+                            ''
+                        )}
                     </div>
                 </InfoWindow>
             </Map>
