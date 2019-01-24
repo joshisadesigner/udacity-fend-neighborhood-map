@@ -12,6 +12,21 @@ body {
     font-size: 14px;
     color: #333333;
 }
+a {
+    color: #016179;
+    text-decoration: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #ff6e00;
+        text-decoration: underline;
+    }
+}
+
+figure {
+    position: relative;
+}
 
 input,
 button {

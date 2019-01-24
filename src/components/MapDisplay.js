@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { InfoWindow, Map, GoogleApiWrapper } from 'google-maps-react';
 import Marker from './Marker';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFoursquare } from '@fortawesome/free-brands-svg-icons';
 
 const MAP_KEY = 'AIzaSyAVSL9eG92K3W19jt0uIpoxW_lZGPdxfJs';
 const FQ_CLIENT = 'SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ';
@@ -179,18 +181,19 @@ class MapDisplay extends Component {
                 >
                     <div>
                         {amProps && amProps.name ? <h4>{amProps.name}</h4> : ''}
-                        {amProps && amProps.url ? <p>{amProps.url}</p> : ''}
+                        {amProps && amProps.url ? <p><a className="marker-info-url" href={amProps.url} target="_blank" rel="noopener noreferrer">Restaurant website</a></p> : ''}
                         {amProps && amProps.images ? (
-                            <figure>
+                            <figure className='img-marker'>
+                                    <figcaption>Image from foursquare.</figcaption>
                                 <img
                                     alt={amProps.name}
                                     src={
                                         amProps.images.items[0].prefix +
-                                        '100x100' +
+                                        'cap100' +
                                         amProps.images.items[0].suffix
                                     }
                                 />
-                                <figcaption>Image from foursquare.</figcaption>
+                                        <FontAwesomeIcon icon={faFoursquare} />
                             </figure>
                         ) : (
                             ''

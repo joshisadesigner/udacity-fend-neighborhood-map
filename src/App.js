@@ -6,15 +6,16 @@ import './styles/main.scss';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFoursquare } from '@fortawesome/free-brands-svg-icons';
 import {
     faSearch,
     faBars,
     faStar,
     faStarHalfAlt,
-    faUtensilsAlt
+    faUtensilsAlt,
 } from '@fortawesome/pro-solid-svg-icons';
 
-library.add(faSearch, faBars, faStar, faStarHalfAlt, faUtensilsAlt);
+library.add(faSearch, faBars, faStar, faStarHalfAlt, faUtensilsAlt, faFoursquare );
 
 class App extends Component {
     state = {
