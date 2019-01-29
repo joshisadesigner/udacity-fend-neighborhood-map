@@ -36,8 +36,10 @@ button {
     border-radius: 20px;
     color: #666666;
 
-    &:focus {
+    &:focus,
+    &:hover {
         outline: none;
+        background: #ffa500;
         border-color: #ffa500;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import locations from './data/locations.json';
 import MapDisplay from './components/MapDisplay';
-import IconButton from './components/IconButton';
+import ListDrawer from './components/ListDrawer';
+
 import './styles/main.scss';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFoursquare } from '@fortawesome/free-brands-svg-icons';
 import {
     faSearch,
@@ -22,76 +22,24 @@ class App extends Component {
         lat: 52.366274,
         lng: 4.8852947,
         zoom: 14,
-        all: locations
+        all: locations,
+        open: false
     };
 
-    onClick = () => {
-        alert('it works!');
+    toggleListDrawer = () => {
+        this.setState({
+            open: !this.state.open
+        })
     };
 
     render() {
         return (
             <div className="App">
-                <div className="drawer">
-                    <div className="search">
-                        <input type="text" placeholder="Search" />
-                        <IconButton
-                            className="search-button"
-                            onClick={this.onClick}
-                        />
-                    </div>
-                    <IconButton
-                        className="drawer-button"
-                        onClick={this.onClick}
-                    />
-                    <div className="list">
-                        <ul>
-                            <li className="item">
-                                <button className="item-button">
-                                    <div className="item-icon">
-                                        <FontAwesomeIcon icon={faUtensilsAlt} />
-                                    </div>
-                                    <div>
-                                        <h4 className="item-name">
-                                            Ciel Bleu Restaurant
-                                        </h4>
-                                        <p className="item-rate">
-                                            4.7
-                                            <FontAwesomeIcon icon={faStar} />
-                                            <FontAwesomeIcon icon={faStar} />
-                                            <FontAwesomeIcon icon={faStar} />
-                                            <FontAwesomeIcon icon={faStar} />
-                                            <FontAwesomeIcon
-                                                icon={faStarHalfAlt}
-                                            />
-                                        </p>
-                                    </div>
-                                </button>
-                            </li>
-                            <li className="item">
-                                <button className="item-button">
-                                    <div className="item-icon">
-                                        <FontAwesomeIcon icon={faUtensilsAlt} />
-                                    </div>
-                                    <div>
-                                        <h4 className="item-name">
-                                            Restaurant Zest - Craft Beer &amp;
-                                            Food
-                                        </h4>
-                                        <p className="item-rate">
-                                            4.7
-                                            <FontAwesomeIcon icon={faStar} />
-                                            <FontAwesomeIcon icon={faStar} />
-                                            <FontAwesomeIcon
-                                                icon={faStarHalfAlt}
-                                            />
-                                        </p>
-                                    </div>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                <ListDrawer 
+                    locations={this.state.all}
+                    open={this.state.open}
+                    toggleDrawer={this.toggleListDrawer}
+                />
                 <div className="content">
                     <MapDisplay
                         lat={this.state.lat}

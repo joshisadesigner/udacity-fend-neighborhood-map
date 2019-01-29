@@ -123,9 +123,6 @@ class MapDisplay extends Component {
 
     setAnimation = markerName => {
         if (markerName === this.state.activeMarkerProps.name) {
-            console.log(
-                markerName + ' / EQUAL / ' + this.state.activeMarkerProps.name
-            );
             return '1';
         } else {
             return '2';
@@ -146,9 +143,6 @@ class MapDisplay extends Component {
         };
 
         let amProps = this.state.activeMarkerProps;
-
-        console.log('Rendering...');
-        console.log(amProps);
 
         return (
             <Map

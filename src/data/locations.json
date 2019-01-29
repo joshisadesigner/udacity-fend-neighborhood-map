@@ -9,7 +9,8 @@
         "location": {
             "lat": 52.3784317,
             "lng": 4.8826728
-        }
+        },
+        "rating": 9.4
     },
     {
         "name": "Bakers & Roasters",
@@ -21,7 +22,8 @@
         "location": {
             "lat": 52.35734799999999,
             "lng": 4.8898908
-        }
+        },
+        "rating": 9.4
     },
     {
         "name": "Brut de mer",
@@ -33,7 +35,8 @@
         "location": {
             "lat": 52.3557886,
             "lng": 4.8925617
-        }
+        },
+        "rating": 8.9
     },
     {
         "name": "The Happy Pig Pancake Shop",
@@ -45,7 +48,8 @@
         "location": {
             "lat": 52.37039790000001,
             "lng": 4.8892859
-        }
+        },
+        "rating": 8.3
     },
     {
         "name": "Casa Nostra",
@@ -57,6 +61,7 @@
         "location": {
             "lat": 52.3556343,
             "lng": 4.90085
-        }
+        },
+        "rating": 8.6
     }
 ]
