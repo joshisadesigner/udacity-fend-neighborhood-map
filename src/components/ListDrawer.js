@@ -4,44 +4,54 @@ import IconButton from './IconButton';
 import {
     faStar,
     faStarHalfAlt,
-    faUtensilsAlt,
+    faUtensilsAlt
 } from '@fortawesome/pro-solid-svg-icons';
-
 
 class ListDrawer extends Component {
     state = {
         open: false,
-        query: ""
-    }
+        query: ''
+    };
 
-    queryUpdate = (queryEntry) => {
+    queryUpdate = queryEntry => {
         this.setState({ query: queryEntry });
-    }
+    };
 
-    ratingStars = (r) => {
+    ratingStars = r => {
         let stars = [];
-        for (let i=0; i < r; i++){
-            if ( (r-i) > 1 ) {
-                stars.push(<FontAwesomeIcon icon={faStar} key={i}/>);
+        for (let i = 0; i < r; i++) {
+            if (r - i > 1) {
+                stars.push(<FontAwesomeIcon icon={faStar} key={i} />);
             } else {
-                stars.push(<FontAwesomeIcon icon={faStarHalfAlt} key={i}/>); 
+                stars.push(<FontAwesomeIcon icon={faStarHalfAlt} key={i} />);
             }
         }
-        return (stars)
-    }
+        return stars;
+    };
 
     render = () => {
         const { locations } = this.props;
 
         return (
-            <div className={"drawer" + (this.props.open ? ' open' : '')}>
+            <div className={'drawer' + (this.props.open ? ' open' : '')}>
                 <IconButton
+                    hiddenName="Drawer"
                     className="drawer-button"
                     onClick={this.props.toggleDrawer}
                 />
                 <div className="search">
-                    <input type="text" placeholder="Search" tabIndex={this.props.open ? '0' : '-1'} />
+                    <label for="search" className="offscreen">
+                        Search:
+                    </label>
+                    <input
+                        id="search"
+                        type="text"
+                        placeholder="Search"
+                        tabIndex={this.props.open ? '0' : '-1'}
+                    />
                     <IconButton
+                        offscreenName="true"
+                        hiddenName="Search"
                         className="search-button"
                         onClick={this.queryUpdate}
                     />
@@ -50,7 +60,10 @@ class ListDrawer extends Component {
                     <ul>
                         {locations.map((location, index) => (
                             <li className="item" key={index}>
-                                <button className="item-button" tabIndex={this.props.open ? '0' : '-1'}>
+                                <button
+                                    className="item-button"
+                                    tabIndex={this.props.open ? '0' : '-1'}
+                                >
                                     <div className="item-icon">
                                         <FontAwesomeIcon icon={faUtensilsAlt} />
                                     </div>
@@ -70,7 +83,7 @@ class ListDrawer extends Component {
                 </div>
             </div>
         );
-    }
+    };
 }
 
 export default ListDrawer;

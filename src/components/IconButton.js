@@ -25,11 +25,14 @@ class IconButton extends Component {
     };
 
     render() {
-        const { className, onClick } = this.props;
+        const { className, onClick, hiddenName, name } = this.props;
 
         return (
             <button className={className} onClick={onClick}>
+                {hiddenName && <span className="offscreen">{hiddenName}</span>}
                 <FontAwesomeIcon icon={this.buttonClass(className)} />
+
+                {name && <span>Your code didn't work</span>}
             </button>
         );
     }
