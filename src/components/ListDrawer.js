@@ -15,6 +15,7 @@ class ListDrawer extends Component {
 
     queryUpdate = queryEntry => {
         this.setState({ query: queryEntry });
+        console.log(queryEntry);
     };
 
     ratingStars = r => {
@@ -40,7 +41,7 @@ class ListDrawer extends Component {
                     onClick={this.props.toggleDrawer}
                 />
                 <div className="search">
-                    <label for="search" className="offscreen">
+                    <label htmlFor="search" className="offscreen">
                         Search:
                     </label>
                     <input
