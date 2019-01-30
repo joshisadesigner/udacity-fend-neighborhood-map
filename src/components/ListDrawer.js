@@ -15,7 +15,7 @@ class ListDrawer extends Component {
 
     queryUpdate = queryEntry => {
         this.setState({ query: queryEntry });
-        console.log(queryEntry);
+        this.props.filterLocations(queryEntry);
     };
 
     ratingStars = r => {
@@ -31,14 +31,14 @@ class ListDrawer extends Component {
     };
 
     render = () => {
-        const { locations } = this.props;
+        const { locations, open, toggleDrawer } = this.props;
 
         return (
-            <div className={'drawer' + (this.props.open ? ' open' : '')}>
+            <div className={'drawer' + (open ? ' open' : '')}>
                 <IconButton
                     hiddenName="Drawer"
                     className="drawer-button"
-                    onClick={this.props.toggleDrawer}
+                    onClick={toggleDrawer}
                 />
                 <div className="search">
                     <label htmlFor="search" className="offscreen">
@@ -48,13 +48,9 @@ class ListDrawer extends Component {
                         id="search"
                         type="text"
                         placeholder="Search"
-                        tabIndex={this.props.open ? '0' : '-1'}
-                    />
-                    <IconButton
-                        offscreenName="true"
-                        hiddenName="Search"
-                        className="search-button"
-                        onClick={this.queryUpdate}
+                        tabIndex={open ? '0' : '-1'}
+                        onChange={e => this.queryUpdate(e.target.value)}
+                        value={this.state.query}
                     />
                 </div>
                 <div className="list">
@@ -63,7 +59,7 @@ class ListDrawer extends Component {
                             <li className="item" key={index}>
                                 <button
                                     className="item-button"
-                                    tabIndex={this.props.open ? '0' : '-1'}
+                                    tabIndex={open ? '0' : '-1'}
                                 >
                                     <div className="item-icon">
                                         <FontAwesomeIcon icon={faUtensilsAlt} />
