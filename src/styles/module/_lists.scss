@@ -57,6 +57,10 @@
             }
         }
 
+        &:active {
+            background: #2b2828;
+        }
+
         &_active {
             color: #fff;
             background: #ff6e00;

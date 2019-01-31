@@ -42,12 +42,12 @@ class ListDrawer extends Component {
                 />
                 <div className="search">
                     <label htmlFor="search" className="offscreen">
-                        Search:
+                        Search restaurant or restaurants:
                     </label>
                     <input
                         id="search"
                         type="text"
-                        placeholder="Search"
+                        placeholder="Search restaurants"
                         tabIndex={open ? '0' : '-1'}
                         onChange={e => this.queryUpdate(e.target.value)}
                         value={this.state.query}

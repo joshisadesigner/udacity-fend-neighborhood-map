@@ -155,6 +155,7 @@ class MapDisplay extends Component {
                 initialCenter={center}
                 onClick={this.closeInfoWindow}
                 mapTypeControl={false}
+                className="content"
             >
                 {this.state.markers.map((location, index) => (
                     <Marker
@@ -175,10 +176,23 @@ class MapDisplay extends Component {
                 >
                     <div>
                         {amProps && amProps.name ? <h4>{amProps.name}</h4> : ''}
-                        {amProps && amProps.url ? <p><a className="marker-info-url" href={amProps.url} target="_blank" rel="noopener noreferrer">Restaurant website</a></p> : ''}
+                        {amProps && amProps.url ? (
+                            <p>
+                                <a
+                                    className="marker-info-url"
+                                    href={amProps.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Restaurant website
+                                </a>
+                            </p>
+                        ) : (
+                            ''
+                        )}
                         {amProps && amProps.images ? (
-                            <figure className='img-marker'>
-                                    <figcaption>Image from foursquare.</figcaption>
+                            <figure className="img-marker">
+                                <figcaption>Image from foursquare.</figcaption>
                                 <img
                                     alt={amProps.name}
                                     src={
@@ -187,7 +201,7 @@ class MapDisplay extends Component {
                                         amProps.images.items[0].suffix
                                     }
                                 />
-                                        <FontAwesomeIcon icon={faFoursquare} />
+                                <FontAwesomeIcon icon={faFoursquare} />
                             </figure>
                         ) : (
                             ''

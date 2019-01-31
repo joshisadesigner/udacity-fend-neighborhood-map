@@ -72,14 +72,12 @@ class App extends Component {
                     toggleDrawer={this.toggleListDrawer}
                     filterLocations={this.queryUpdate}
                 />
-                <div className="content">
-                    <MapDisplay
-                        lat={this.state.lat}
-                        lng={this.state.lng}
-                        zoom={this.state.zoom}
-                        locations={this.state.filtered}
-                    />
-                </div>
+                <MapDisplay
+                    lat={this.state.lat}
+                    lng={this.state.lng}
+                    zoom={this.state.zoom}
+                    locations={this.state.filtered}
+                />
             </div>
         );
     }
