@@ -60,6 +60,9 @@ class ListDrawer extends Component {
                                 <button
                                     className="item-button"
                                     tabIndex={open ? '0' : '-1'}
+                                    onClick={e => {
+                                        this.props.listDrawerItemClick(index);
+                                    }}
                                 >
                                     <div className="item-icon">
                                         <FontAwesomeIcon icon={faUtensilsAlt} />

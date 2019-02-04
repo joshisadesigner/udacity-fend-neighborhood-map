@@ -24,6 +24,10 @@ library.add(
     faFoursquare
 );
 
+const FQ_CLIENT = 'SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ';
+const FQ_SECRET = 'TUQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D';
+const FQ_VERSION = '20180115';
+
 class App extends Component {
     state = {
         lat: 52.366274,
@@ -31,7 +35,10 @@ class App extends Component {
         zoom: 14,
         all: locations,
         filtered: locations,
-        open: false
+        activeMarker: {},
+        open: false,
+        selectedIndex: -1,
+        showingInfoWindow: false
     };
 
     componentDidMount = () => {
@@ -39,13 +46,11 @@ class App extends Component {
             ...this.state,
             filtered: this.filterLocations(this.state.all, '')
         });
-        console.log('componentDidMount fired!');
     };
 
     queryUpdate = queryEntry => {
         this.setState({
-            ...this.state,
-            selectedIndex: null,
+            selectedIndex: -1,
             filtered: this.filterLocations(this.state.all, queryEntry)
         });
     };
@@ -56,27 +61,102 @@ class App extends Component {
         );
     };
 
-    toggleListDrawer = () => {
+    listDrawerToggle = () => {
         this.setState({
             open: !this.state.open
         });
     };
 
+    listDrawerItemClick = index => {
+        this.setState({
+            selectedIndex: index
+            // open: !this.state.open
+        });
+    };
+
+    getBusinessInfo = (props, data) => {
+        return data.response.venues.filter(
+            item =>
+                item.name.includes(props.name) || props.name.includes(item.name)
+        );
+    };
+
+    onMarkerClick = (props, marker, e) => {
+        this.closeInfoWindow();
+
+        let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&radius=100&ll=${
+            props.position.lat
+        },${props.position.lng}&llAcc=100`;
+        let headers = new Headers();
+        let request = new Request(url, {
+            method: 'GET',
+            headers
+        });
+
+        let cMarker = marker;
+
+        fetch(request)
+            .then(response => response.json())
+            .then(result => {
+                let restaurant = this.getBusinessInfo(props, result);
+
+                cMarker.foursquare = restaurant[0];
+
+                if (cMarker.foursquare) {
+                    let url = `https://api.foursquare.com/v2/venues/${
+                        restaurant[0].id
+                    }/photos?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}`;
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(result => {
+                            cMarker.images = result.response.photos;
+
+                            this.setState({
+                                showingInfoWindow: true,
+                                activeMarker: cMarker
+                            });
+                        });
+                } else {
+                    this.setState({
+                        showingInfoWindow: true,
+                        activeMarker: cMarker
+                    });
+                }
+            });
+    };
+
+    closeInfoWindow = () => {
+        if (this.state.showingInfoWindow) {
+            this.setState({
+                showingInfoWindow: false,
+                activeMarker: {},
+                activeMarkerProps: {}
+            });
+        }
+    };
+
     render() {
         return (
             <div className="App">
-                {console.log(this.state.filtered)}
                 <ListDrawer
                     locations={this.state.filtered}
                     open={this.state.open}
-                    toggleDrawer={this.toggleListDrawer}
+                    toggleDrawer={this.listDrawerToggle}
                     filterLocations={this.queryUpdate}
+                    listDrawerItemClick={this.listDrawerItemClick}
+                    selectedIndex={this.state.selectedIndex}
                 />
                 <MapDisplay
                     lat={this.state.lat}
                     lng={this.state.lng}
                     zoom={this.state.zoom}
                     locations={this.state.filtered}
+                    listDrawerItemClick={this.listDrawerItemClick}
+                    selectedIndex={this.state.selectedIndex}
+                    activeMarker={this.state.activeMarker}
+                    closeInfoWindow={this.closeInfoWindow}
+                    onMarkerClick={this.onMarkerClick}
+                    showingInfoWindow={this.state.showingInfoWindow}
                 />
             </div>
         );
