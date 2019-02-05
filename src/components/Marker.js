@@ -9,6 +9,10 @@ export default class Marker extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.props.onRef(this);
+    }
+
     render() {
         return (
             <GoogleMarker {...this.props} ref={ref => (this.marker = ref)} />

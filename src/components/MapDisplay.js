@@ -7,23 +7,11 @@ const MAP_KEY = 'AIzaSyAVSL9eG92K3W19jt0uIpoxW_lZGPdxfJs';
 
 class MapDisplay extends Component {
     state = {
-        map: null,
         markers: []
     };
 
     mapReady = (props, map) => {
         this.setState({ map });
-
-        this.props.locations.map((location, index) => {
-            // console.log(this.state.markers[index]);
-            return (location.marker = this.state.markers[index]);
-        });
-    };
-
-    onMarkerMounted = e => {
-        this.setState(prevState => ({
-            markers: [...prevState.markers, e.marker]
-        }));
     };
 
     setAnimation = markerName => {
@@ -32,6 +20,15 @@ class MapDisplay extends Component {
         } else {
             return '2';
         }
+    };
+
+    markerAr = (ref, locations) => {
+        this.setState(prevState => ({
+            markers: [...prevState.markers, ref]
+        }));
+
+        console.log('markerAr fired...');
+        console.log(locations);
     };
 
     render = () => {
@@ -72,7 +69,7 @@ class MapDisplay extends Component {
             >
                 {locations.map(({ location, name, url }, index) => (
                     <Marker
-                        ref={this.onMarkerMounted}
+                        onRef={ref => this.markerAr(ref, locations)}
                         key={index}
                         position={location}
                         onClick={onMarkerClick}

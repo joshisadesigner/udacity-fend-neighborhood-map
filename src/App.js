@@ -71,7 +71,7 @@ class App extends Component {
             selectedIndex: index
             // open: !this.state.open
         });
-        this.onMarkerClick(location.marker.props, location.marker.marker);
+        // this.onMarkerClick(location.marker.props, location.marker.marker);
     };
 
     getBusinessInfo = (props, data) => {
@@ -141,8 +141,12 @@ class App extends Component {
         }
     };
 
+    markerData = data => {
+        console.log(data);
+    };
+
     render() {
-        console.log(this.state.filtered);
+        // console.log(this.state.filtered);
         return (
             <div className="App">
                 <ListDrawer
@@ -163,7 +167,7 @@ class App extends Component {
                     closeInfoWindow={this.closeInfoWindow}
                     onMarkerClick={this.onMarkerClick}
                     showingInfoWindow={this.state.showingInfoWindow}
-                    updateLocations={this.updateLocations}
+                    markerData={this.markerData}
                 />
             </div>
         );
