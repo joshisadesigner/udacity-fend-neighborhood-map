@@ -7,11 +7,23 @@ const MAP_KEY = 'AIzaSyAVSL9eG92K3W19jt0uIpoxW_lZGPdxfJs';
 
 class MapDisplay extends Component {
     state = {
-        map: null
+        map: null,
+        markers: []
     };
 
     mapReady = (props, map) => {
         this.setState({ map });
+
+        this.props.locations.map((location, index) => {
+            // console.log(this.state.markers[index]);
+            return (location.marker = this.state.markers[index]);
+        });
+    };
+
+    onMarkerMounted = e => {
+        this.setState(prevState => ({
+            markers: [...prevState.markers, e.marker]
+        }));
     };
 
     setAnimation = markerName => {
@@ -24,15 +36,15 @@ class MapDisplay extends Component {
 
     render = () => {
         const {
+            activeMarker,
+            closeInfoWindow,
             onMarkerClick,
             google,
-            zoom,
-            locations,
             lat,
             lng,
-            closeInfoWindow,
+            locations,
             showingInfoWindow,
-            activeMarker
+            zoom
         } = this.props;
 
         const style = {
@@ -60,6 +72,7 @@ class MapDisplay extends Component {
             >
                 {locations.map(({ location, name, url }, index) => (
                     <Marker
+                        ref={this.onMarkerMounted}
                         key={index}
                         position={location}
                         onClick={onMarkerClick}

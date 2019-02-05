@@ -43,7 +43,6 @@ class App extends Component {
 
     componentDidMount = () => {
         this.setState({
-            ...this.state,
             filtered: this.filterLocations(this.state.all, '')
         });
     };
@@ -67,11 +66,12 @@ class App extends Component {
         });
     };
 
-    listDrawerItemClick = index => {
+    listDrawerItemClick = (index, location) => {
         this.setState({
             selectedIndex: index
             // open: !this.state.open
         });
+        this.onMarkerClick(location.marker.props, location.marker.marker);
     };
 
     getBusinessInfo = (props, data) => {
@@ -83,6 +83,12 @@ class App extends Component {
 
     onMarkerClick = (props, marker, e) => {
         this.closeInfoWindow();
+
+        console.log('props: ');
+        console.log(props);
+
+        console.log('marker :');
+        console.log(marker);
 
         let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&radius=100&ll=${
             props.position.lat
@@ -136,6 +142,7 @@ class App extends Component {
     };
 
     render() {
+        console.log(this.state.filtered);
         return (
             <div className="App">
                 <ListDrawer
@@ -151,12 +158,12 @@ class App extends Component {
                     lng={this.state.lng}
                     zoom={this.state.zoom}
                     locations={this.state.filtered}
-                    listDrawerItemClick={this.listDrawerItemClick}
                     selectedIndex={this.state.selectedIndex}
                     activeMarker={this.state.activeMarker}
                     closeInfoWindow={this.closeInfoWindow}
                     onMarkerClick={this.onMarkerClick}
                     showingInfoWindow={this.state.showingInfoWindow}
+                    updateLocations={this.updateLocations}
                 />
             </div>
         );

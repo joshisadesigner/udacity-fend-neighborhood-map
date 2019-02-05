@@ -7,10 +7,6 @@ class MarkerInfo extends Component {
     render() {
         const { activeMarker, visible, onClose, ...props } = this.props;
 
-        console.log('MarkerInfo.js:  ');
-        console.log(activeMarker);
-        console.log(visible);
-
         return (
             <InfoWindow
                 {...props}

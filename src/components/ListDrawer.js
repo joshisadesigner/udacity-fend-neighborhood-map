@@ -33,6 +33,10 @@ class ListDrawer extends Component {
     render = () => {
         const { locations, open, toggleDrawer } = this.props;
 
+        // console.log('ListDrawer.js render');
+
+        // console.log(this.props.selectedIndex);
+
         return (
             <div className={'drawer' + (open ? ' open' : '')}>
                 <IconButton
@@ -58,10 +62,18 @@ class ListDrawer extends Component {
                         {locations.map((location, index) => (
                             <li className="item" key={index}>
                                 <button
-                                    className="item-button"
+                                    className={
+                                        'item-button' +
+                                        (this.props.selectedIndex === index
+                                            ? ' intem-button_active'
+                                            : '')
+                                    }
                                     tabIndex={open ? '0' : '-1'}
                                     onClick={e => {
-                                        this.props.listDrawerItemClick(index);
+                                        this.props.listDrawerItemClick(
+                                            index,
+                                            location
+                                        );
                                     }}
                                 >
                                     <div className="item-icon">
