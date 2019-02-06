@@ -22,20 +22,30 @@ class MapDisplay extends Component {
         }
     };
 
-    markerAr = (ref, locations) => {
+    markerAr = ref => {
         this.setState(prevState => ({
             markers: [...prevState.markers, ref]
         }));
 
-        console.log('markerAr fired...');
-        console.log(locations);
+        console.log('mapReady fired...');
+    };
+
+    onMarkerMount = () => {
+        console.log(this.state.markers);
+    };
+
+    onMarkerClick = index => () => {
+        // const { onMarkerClick } = this.props;
+        // onMarkerClick(index);
+
+        this.onMarkerMount();
     };
 
     render = () => {
         const {
             activeMarker,
             closeInfoWindow,
-            onMarkerClick,
+            // onMarkerClick,
             google,
             lat,
             lng,
@@ -53,6 +63,8 @@ class MapDisplay extends Component {
             lat: lat,
             lng: lng
         };
+
+        console.log('Mapdisplay render...');
 
         return (
             <Map
@@ -72,7 +84,7 @@ class MapDisplay extends Component {
                         onRef={ref => this.markerAr(ref, locations)}
                         key={index}
                         position={location}
-                        onClick={onMarkerClick}
+                        onClick={this.onMarkerClick(index)}
                         name={name}
                         url={url}
                         animation={this.setAnimation(name)}
