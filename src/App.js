@@ -43,13 +43,15 @@ class App extends Component {
     };
 
     componentDidMount = () => {
+        console.log('component did mount...');
         this.setState({
-            filtered: this.filterLocations(this.state.all, ''),
-            filteredMarkers: this.filterMarkers(this.state.markers, '')
+            filtered: this.filterLocations(this.state.all, '')
         });
     };
 
     queryUpdate = queryEntry => {
+        this.closeInfoWindow();
+
         this.setState({
             selectedIndex: -1,
             filtered: this.filterLocations(this.state.all, queryEntry),
@@ -72,7 +74,7 @@ class App extends Component {
     markersArray = markerRef => {
         this.setState({
             markers: markerRef,
-            filteredMarkers: markerRef
+            filteredMarkers: this.filterMarkers(markerRef, '')
         });
     };
 
@@ -82,12 +84,11 @@ class App extends Component {
         });
     };
 
-    listDrawerItemClick = (index, location) => {
+    listDrawerItemClick = index => {
         this.setState({
-            selectedIndex: index
             // open: !this.state.open
         });
-        // this.showInfoWindow(location.marker.props, location.marker.marker);
+        this.showInfoWindow(index);
     };
 
     getBusinessInfo = (props, data) => {
@@ -97,11 +98,21 @@ class App extends Component {
         );
     };
 
+    closeInfoWindow = () => {
+        if (this.state.showingInfoWindow) {
+            this.setState({
+                showingInfoWindow: false,
+                selectedIndex: -1,
+                activeMarker: {}
+            });
+        }
+    };
+
     showInfoWindow = (index, e) => {
         this.closeInfoWindow();
 
         let props = this.state.filteredMarkers[index].props;
-        let marker = this.state.filteredMarkers[index].marker;
+        let marker = this.state.filteredMarkers[index].marker.marker;
 
         let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&radius=100&ll=${
             props.position.lat
@@ -112,8 +123,6 @@ class App extends Component {
             headers
         });
 
-        console.log('marker: ');
-        console.log(marker);
         let cMarker = marker;
 
         fetch(request)
@@ -134,29 +143,22 @@ class App extends Component {
 
                             this.setState({
                                 showingInfoWindow: true,
-                                activeMarker: cMarker
+                                activeMarker: cMarker,
+                                selectedIndex: index
                             });
                         });
                 } else {
                     this.setState({
                         showingInfoWindow: true,
-                        activeMarker: cMarker
+                        activeMarker: cMarker,
+                        selectedIndex: index
                     });
                 }
             });
     };
 
-    closeInfoWindow = () => {
-        if (this.state.showingInfoWindow) {
-            this.setState({
-                showingInfoWindow: false,
-                activeMarker: {},
-                activeMarkerProps: {}
-            });
-        }
-    };
-
     render() {
+        console.log(this.state.filteredMarkers);
         return (
             <div className="App">
                 <ListDrawer

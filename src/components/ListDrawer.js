@@ -65,7 +65,7 @@ class ListDrawer extends Component {
                                     className={
                                         'item-button' +
                                         (this.props.selectedIndex === index
-                                            ? ' intem-button_active'
+                                            ? ' item-button_active'
                                             : '')
                                     }
                                     tabIndex={open ? '0' : '-1'}
