@@ -1,5 +1,6 @@
 import React from 'react';
 import { Marker as GoogleMarker } from 'google-maps-react';
+import MarkerInfo from './MarkerInfo';
 
 export default class Marker extends React.Component {
     componentDidUpdate(prevProps) {
@@ -9,13 +10,17 @@ export default class Marker extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.props.onRef(this);
-    }
-
     render() {
         return (
-            <GoogleMarker {...this.props} ref={ref => (this.marker = ref)} />
+            <div>
+                {this.marker && (
+                    <MarkerInfo {...this.props} marker={this.marker.marker} />
+                )}
+                <GoogleMarker
+                    {...this.props}
+                    ref={ref => (this.marker = ref)}
+                />
+            </div>
         );
     }
 }

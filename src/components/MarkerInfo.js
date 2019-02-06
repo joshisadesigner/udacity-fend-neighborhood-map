@@ -4,51 +4,55 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFoursquare } from '@fortawesome/free-brands-svg-icons';
 
 class MarkerInfo extends Component {
+    state = {
+        visible: false
+    };
+    isVisible = () => {
+        if (this.props.name === this.props.activeMarker.name) {
+            console.log('name equal');
+            this.setState({
+                visible: true
+            });
+        } else {
+            console.log('name different');
+            this.setState({
+                visible: false
+            });
+        }
+    };
+
     render() {
-        const { activeMarker, visible, onClose, ...props } = this.props;
+        const { name, url, images, visible } = this.props;
 
         return (
-            <InfoWindow
-                {...props}
-                marker={activeMarker}
-                visible={visible}
-                onClose={onClose}
-            >
+            <InfoWindow {...this.props} visible={visible}>
                 <div>
-                    {activeMarker && activeMarker.name ? (
-                        <h4>{activeMarker.name}</h4>
-                    ) : (
-                        ''
-                    )}
-                    {activeMarker && activeMarker.url ? (
+                    {name && <h4>{name}</h4>}
+                    {url && (
                         <p>
                             <a
                                 className="marker-info-url"
-                                href={activeMarker.url}
+                                href={url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Restaurant website
                             </a>
                         </p>
-                    ) : (
-                        ''
                     )}
-                    {activeMarker && activeMarker.images ? (
+                    {images && (
                         <figure className="img-marker">
                             <figcaption>Image from foursquare.</figcaption>
                             <img
-                                alt={activeMarker.name}
+                                alt={name}
                                 src={
-                                    activeMarker.images.items[0].prefix +
+                                    images.items[0].prefix +
                                     'cap100' +
-                                    activeMarker.images.items[0].suffix
+                                    images.items[0].suffix
                                 }
                             />
                             <FontAwesomeIcon icon={faFoursquare} />
                         </figure>
-                    ) : (
-                        ''
                     )}
                 </div>
             </InfoWindow>

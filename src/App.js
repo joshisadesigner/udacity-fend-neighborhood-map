@@ -35,7 +35,6 @@ class App extends Component {
         zoom: 14,
         all: locations,
         filtered: locations,
-        markers: [],
         activeMarker: {},
         open: false,
         selectedIndex: -1,
@@ -43,7 +42,6 @@ class App extends Component {
     };
 
     componentDidMount = () => {
-        console.log('component did mount...');
         this.setState({
             filtered: this.filterLocations(this.state.all, '')
         });
@@ -54,8 +52,7 @@ class App extends Component {
 
         this.setState({
             selectedIndex: -1,
-            filtered: this.filterLocations(this.state.all, queryEntry),
-            filteredMarkers: this.filterMarkers(this.state.markers, queryEntry)
+            filtered: this.filterLocations(this.state.all, queryEntry)
         });
     };
 
@@ -63,19 +60,6 @@ class App extends Component {
         return locations.filter(location =>
             location.name.toLowerCase().includes(query.toLowerCase())
         );
-    };
-
-    filterMarkers = (markers, query) => {
-        return markers.filter(marker =>
-            marker.props.name.toLowerCase().includes(query.toLowerCase())
-        );
-    };
-
-    markersArray = markerRef => {
-        this.setState({
-            markers: markerRef,
-            filteredMarkers: this.filterMarkers(markerRef, '')
-        });
     };
 
     listDrawerToggle = () => {
@@ -99,31 +83,29 @@ class App extends Component {
     };
 
     closeInfoWindow = () => {
-        if (this.state.showingInfoWindow) {
-            this.setState({
-                showingInfoWindow: false,
-                selectedIndex: -1,
-                activeMarker: {}
-            });
-        }
+        this.setState({
+            showingInfoWindow: false,
+            activeMarker: {}
+        });
     };
 
     showInfoWindow = (index, e) => {
         this.closeInfoWindow();
 
-        let props = this.state.filteredMarkers[index].props;
-        let marker = this.state.filteredMarkers[index].marker.marker;
+        let props = this.state.filtered[index];
 
         let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&radius=100&ll=${
-            props.position.lat
-        },${props.position.lng}&llAcc=100`;
+            props.location.lat
+        },${props.location.lng}&llAcc=100`;
         let headers = new Headers();
         let request = new Request(url, {
             method: 'GET',
             headers
         });
 
-        let cMarker = marker;
+        let cMarker = props;
+
+        cMarker.visible = true;
 
         fetch(request)
             .then(response => response.json())
@@ -142,23 +124,19 @@ class App extends Component {
                             cMarker.images = result.response.photos;
 
                             this.setState({
-                                showingInfoWindow: true,
-                                activeMarker: cMarker,
-                                selectedIndex: index
+                                activeMarker: cMarker
                             });
                         });
                 } else {
                     this.setState({
-                        showingInfoWindow: true,
-                        activeMarker: cMarker,
-                        selectedIndex: index
+                        activeMarker: cMarker
                     });
                 }
             });
     };
 
     render() {
-        console.log(this.state.filteredMarkers);
+        // console.log(this.state.filtered);
         return (
             <div className="App">
                 <ListDrawer
@@ -167,19 +145,15 @@ class App extends Component {
                     toggleDrawer={this.listDrawerToggle}
                     filterLocations={this.queryUpdate}
                     listDrawerItemClick={this.listDrawerItemClick}
-                    selectedIndex={this.state.selectedIndex}
                 />
                 <MapDisplay
                     lat={this.state.lat}
                     lng={this.state.lng}
                     zoom={this.state.zoom}
                     locations={this.state.filtered}
-                    selectedIndex={this.state.selectedIndex}
                     activeMarker={this.state.activeMarker}
                     closeInfoWindow={this.closeInfoWindow}
                     showInfoWindow={this.showInfoWindow}
-                    showingInfoWindow={this.state.showingInfoWindow}
-                    markersArray={this.markersArray}
                 />
             </div>
         );

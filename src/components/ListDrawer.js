@@ -33,10 +33,6 @@ class ListDrawer extends Component {
     render = () => {
         const { locations, open, toggleDrawer } = this.props;
 
-        // console.log('ListDrawer.js render');
-
-        // console.log(this.props.selectedIndex);
-
         return (
             <div className={'drawer' + (open ? ' open' : '')}>
                 <IconButton

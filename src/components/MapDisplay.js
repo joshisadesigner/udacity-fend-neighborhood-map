@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
 import Marker from './Marker';
-import MarkerInfo from './MarkerInfo';
+// import MarkerInfo from './MarkerInfo';
 
 const MAP_KEY = 'AIzaSyAVSL9eG92K3W19jt0uIpoxW_lZGPdxfJs';
 
 class MapDisplay extends Component {
-    state = {
-        markers: []
-    };
-
     mapReady = (props, map) => {
         this.setState({ map });
-        this.props.markersArray(this.state.markers);
     };
 
     setAnimation = markerName => {
@@ -21,12 +16,6 @@ class MapDisplay extends Component {
         } else {
             return '2';
         }
-    };
-
-    markerReference = ref => {
-        this.setState(prevState => ({
-            markers: [...prevState.markers, ref]
-        }));
     };
 
     onMarkerClick = index => () => {
@@ -42,7 +31,6 @@ class MapDisplay extends Component {
             lat,
             lng,
             locations,
-            showingInfoWindow,
             zoom
         } = this.props;
 
@@ -69,22 +57,18 @@ class MapDisplay extends Component {
                 mapTypeControl={false}
                 className="content"
             >
-                {locations.map(({ location, name, url }, index) => (
+                {locations.map(({ location, name, url, visible }, index) => (
                     <Marker
-                        onRef={ref => this.markerReference(ref)}
                         key={index}
                         position={location}
                         onClick={this.onMarkerClick(index)}
                         name={name}
                         url={url}
                         animation={this.setAnimation(name)}
+                        visible={visible}
+                        activeMarker={activeMarker}
                     />
                 ))}
-                <MarkerInfo
-                    activeMarker={activeMarker}
-                    visible={showingInfoWindow}
-                    onClose={closeInfoWindow}
-                />
             </Map>
         );
     };
