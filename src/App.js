@@ -35,6 +35,7 @@ class App extends Component {
         zoom: 14,
         all: locations,
         filtered: locations,
+        markers: [],
         activeMarker: {},
         open: false,
         selectedIndex: -1,
@@ -50,7 +51,8 @@ class App extends Component {
     queryUpdate = queryEntry => {
         this.setState({
             selectedIndex: -1,
-            filtered: this.filterLocations(this.state.all, queryEntry)
+            filtered: this.filterLocations(this.state.all, queryEntry),
+            filteredMarkers: this.filterMarkers(this.state.markers, queryEntry)
         });
     };
 
@@ -59,6 +61,17 @@ class App extends Component {
             location.name.toLowerCase().includes(query.toLowerCase())
         );
     };
+
+    filterMarkers = (markers, query) => {
+        return markers.filter(marker => {
+            
+        let markerName = marker.props.name.toLowerCase();
+        let qry = query.toLowerCase();
+
+        console.log(markerName, qry)
+            return markerName.includes(qry)
+        });
+    }
 
     listDrawerToggle = () => {
         this.setState({
@@ -141,12 +154,15 @@ class App extends Component {
         }
     };
 
-    markerData = data => {
-        console.log(data);
+    markersArray = markerRef => {
+        this.setState({
+            markers: markerRef
+        })
     };
 
     render() {
-        // console.log(this.state.filtered);
+        console.log(this.state.filtered);
+        console.log(this.state.markers);
         return (
             <div className="App">
                 <ListDrawer
@@ -167,7 +183,7 @@ class App extends Component {
                     closeInfoWindow={this.closeInfoWindow}
                     onMarkerClick={this.onMarkerClick}
                     showingInfoWindow={this.state.showingInfoWindow}
-                    markerData={this.markerData}
+                    markersArray={this.markersArray}
                 />
             </div>
         );
