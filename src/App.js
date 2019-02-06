@@ -44,7 +44,8 @@ class App extends Component {
 
     componentDidMount = () => {
         this.setState({
-            filtered: this.filterLocations(this.state.all, '')
+            filtered: this.filterLocations(this.state.all, ''),
+            filteredMarkers: this.filterMarkers(this.state.markers, '')
         });
     };
 
@@ -63,15 +64,17 @@ class App extends Component {
     };
 
     filterMarkers = (markers, query) => {
-        return markers.filter(marker => {
-            
-        let markerName = marker.props.name.toLowerCase();
-        let qry = query.toLowerCase();
+        return markers.filter(marker =>
+            marker.props.name.toLowerCase().includes(query.toLowerCase())
+        );
+    };
 
-        console.log(markerName, qry)
-            return markerName.includes(qry)
+    markersArray = markerRef => {
+        this.setState({
+            markers: markerRef,
+            filteredMarkers: markerRef
         });
-    }
+    };
 
     listDrawerToggle = () => {
         this.setState({
@@ -84,7 +87,7 @@ class App extends Component {
             selectedIndex: index
             // open: !this.state.open
         });
-        // this.onMarkerClick(location.marker.props, location.marker.marker);
+        // this.showInfoWindow(location.marker.props, location.marker.marker);
     };
 
     getBusinessInfo = (props, data) => {
@@ -94,14 +97,11 @@ class App extends Component {
         );
     };
 
-    onMarkerClick = (props, marker, e) => {
+    showInfoWindow = (index, e) => {
         this.closeInfoWindow();
 
-        console.log('props: ');
-        console.log(props);
-
-        console.log('marker :');
-        console.log(marker);
+        let props = this.state.filteredMarkers[index].props;
+        let marker = this.state.filteredMarkers[index].marker;
 
         let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&radius=100&ll=${
             props.position.lat
@@ -112,6 +112,8 @@ class App extends Component {
             headers
         });
 
+        console.log('marker: ');
+        console.log(marker);
         let cMarker = marker;
 
         fetch(request)
@@ -154,15 +156,7 @@ class App extends Component {
         }
     };
 
-    markersArray = markerRef => {
-        this.setState({
-            markers: markerRef
-        })
-    };
-
     render() {
-        console.log(this.state.filtered);
-        console.log(this.state.markers);
         return (
             <div className="App">
                 <ListDrawer
@@ -181,7 +175,7 @@ class App extends Component {
                     selectedIndex={this.state.selectedIndex}
                     activeMarker={this.state.activeMarker}
                     closeInfoWindow={this.closeInfoWindow}
-                    onMarkerClick={this.onMarkerClick}
+                    showInfoWindow={this.showInfoWindow}
                     showingInfoWindow={this.state.showingInfoWindow}
                     markersArray={this.markersArray}
                 />

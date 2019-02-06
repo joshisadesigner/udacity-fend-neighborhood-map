@@ -30,17 +30,14 @@ class MapDisplay extends Component {
     };
 
     onMarkerClick = index => () => {
-        // const { onMarkerClick } = this.props;
-        // onMarkerClick(index);
-        
-        this.props.markersRefernce(this.state.markers)
+        const { showInfoWindow } = this.props;
+        showInfoWindow(index);
     };
 
     render = () => {
         const {
             activeMarker,
             closeInfoWindow,
-            // onMarkerClick,
             google,
             lat,
             lng,
