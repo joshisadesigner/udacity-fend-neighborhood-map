@@ -13,11 +13,21 @@ class ListDrawer extends Component {
         query: ''
     };
 
+    /**
+     * @description Set new state for filter input and send the entered query to filter locations
+     * @param String
+     * @returns State, function
+     */
     queryUpdate = queryEntry => {
         this.setState({ query: queryEntry });
         this.props.filterLocations(queryEntry);
     };
 
+    /**
+     * @description Create an array of Font Awesome star icons
+     * @param Numeric
+     * @returns Array
+     */
     ratingStars = r => {
         let stars = [];
         for (let i = 0; i < r; i++) {

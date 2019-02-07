@@ -10,6 +10,11 @@ class MapDisplay extends Component {
         this.setState({ map });
     };
 
+    /**
+     * @description Sets animation based on active Marker name
+     * @param string - name of the restaurant
+     * @returns Number
+     */
     setAnimation = markerName => {
         if (markerName === this.props.activeMarker.name) {
             return '1';
@@ -18,6 +23,11 @@ class MapDisplay extends Component {
         }
     };
 
+    /**
+     * @description Send the index of marker clicked
+     * @param Numeric
+     * @returns Function
+     */
     onMarkerClick = index => () => {
         const { showInfoWindow } = this.props;
         showInfoWindow(index);
