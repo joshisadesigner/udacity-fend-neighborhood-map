@@ -20,6 +20,7 @@ npm start
 
 ## Resources
 
+-   3rd party API from [Foursquare](https://developer.foursquare.com)
 -   Udacity Forums
 -   Stackoverflow
 -   [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/tutorial)
