@@ -30,9 +30,9 @@ const FQ_VERSION = '20180115';
 
 class App extends Component {
     state = {
-        lat: 52.366274,
-        lng: 4.8852947,
-        zoom: 14,
+        lat: 52.3728097,
+        lng: 4.8751014,
+        zoom: 13,
         all: locations,
         filtered: locations,
         activeMarker: {},
