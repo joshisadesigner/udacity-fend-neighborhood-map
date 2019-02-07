@@ -63,5 +63,44 @@
             "lng": 4.90085
         },
         "rating": 8.6
+    },
+    {
+        "name": "BAK",
+        "street": "Van Diemenstraat 408",
+        "postal_code": "1013 CR",
+        "locality": "Amsterdam",
+        "country": "Netherlands",
+        "url": "https://bakrestaurant.nl",
+        "location": {
+            "lat": 52.3903058,
+            "lng": 4.8849932
+        },
+        "rating": 9.0
+    },
+    {
+        "name": "Worst Wijncafé",
+        "street": "Barentszstraat 171",
+        "postal_code": "1013 NM",
+        "locality": "Amsterdam",
+        "country": "Netherlands",
+        "url": "http://deworst.nl",
+        "location": {
+            "lat": 52.3888303,
+            "lng": 4.8855103
+        },
+        "rating": 8.3
+    },
+    {
+        "name": "Café-Restaurant Stork",
+        "street": "Gedempt Hamerkanaal 201",
+        "postal_code": "1021 KP",
+        "locality": "Amsterdam",
+        "country": "Netherlands",
+        "url": "http://www.restaurantstork.nl",
+        "location": {
+            "lat": 52.3789723,
+            "lng": 4.9045708
+        },
+        "rating": 8.3
     }
 ]
