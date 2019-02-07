@@ -38,7 +38,7 @@ class MarkerInfo extends Component {
                         <figure className="img-marker">
                             <figcaption>Image from foursquare.</figcaption>
                             <img
-                                alt={name}
+                                alt={'Image of ' + name + ' from foursquare.'}
                                 src={
                                     images.items[0].prefix +
                                     'cap100' +

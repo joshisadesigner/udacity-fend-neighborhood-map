@@ -166,8 +166,7 @@ class App extends Component {
                                 activeMarker: cMarker,
                                 selectedIndex: index
                             });
-                        })
-                        .catch(error => console.error(error));
+                        });
                 } else {
                     this.setState({
                         activeMarker: cMarker,
