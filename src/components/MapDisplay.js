@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
 import Marker from './Marker';
+import MapDisplayLoader from './MapDisplayLoader';
 
 const MAP_KEY = 'AIzaSyAVSL9eG92K3W19jt0uIpoxW_lZGPdxfJs';
 
@@ -75,4 +76,7 @@ class MapDisplay extends Component {
     };
 }
 
-export default GoogleApiWrapper({ apiKey: MAP_KEY })(MapDisplay);
+export default GoogleApiWrapper({
+    apiKey: MAP_KEY,
+    LoadingContainer: MapDisplayLoader
+})(MapDisplay);
