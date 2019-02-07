@@ -4,28 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFoursquare } from '@fortawesome/free-brands-svg-icons';
 
 class MarkerInfo extends Component {
-    state = {
-        visible: false
-    };
-    isVisible = () => {
-        if (this.props.name === this.props.activeMarker.name) {
-            console.log('name equal');
-            this.setState({
-                visible: true
-            });
-        } else {
-            console.log('name different');
-            this.setState({
-                visible: false
-            });
+    isvisible = name => {
+        if (name === this.props.activeMarker.name) {
+            return true;
         }
     };
 
     render() {
-        const { name, url, images, visible } = this.props;
+        const {
+            name,
+            url,
+            images,
+            activeMarker: { name: activeName }
+        } = this.props;
 
         return (
-            <InfoWindow {...this.props} visible={visible}>
+            <InfoWindow {...this.props} visible={name === activeName}>
                 <div>
                     {name && <h4>{name}</h4>}
                     {url && (

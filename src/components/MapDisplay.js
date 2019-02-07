@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
 import Marker from './Marker';
-// import MarkerInfo from './MarkerInfo';
 
 const MAP_KEY = 'AIzaSyAVSL9eG92K3W19jt0uIpoxW_lZGPdxfJs';
 
@@ -27,6 +26,7 @@ class MapDisplay extends Component {
         const {
             activeMarker,
             closeInfoWindow,
+            showInfoWindow,
             google,
             lat,
             lng,
@@ -67,6 +67,7 @@ class MapDisplay extends Component {
                         animation={this.setAnimation(name)}
                         visible={visible}
                         activeMarker={activeMarker}
+                        showInfoWindow={showInfoWindow}
                     />
                 ))}
             </Map>

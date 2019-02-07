@@ -69,9 +69,6 @@ class App extends Component {
     };
 
     listDrawerItemClick = index => {
-        this.setState({
-            // open: !this.state.open
-        });
         this.showInfoWindow(index);
     };
 
@@ -83,9 +80,11 @@ class App extends Component {
     };
 
     closeInfoWindow = () => {
+        let aMarker = { visible: false };
         this.setState({
             showingInfoWindow: false,
-            activeMarker: {}
+            activeMarker: aMarker,
+            selectedIndex: -1
         });
     };
 
@@ -105,8 +104,6 @@ class App extends Component {
 
         let cMarker = props;
 
-        cMarker.visible = true;
-
         fetch(request)
             .then(response => response.json())
             .then(result => {
@@ -124,19 +121,20 @@ class App extends Component {
                             cMarker.images = result.response.photos;
 
                             this.setState({
-                                activeMarker: cMarker
+                                activeMarker: cMarker,
+                                selectedIndex: index
                             });
                         });
                 } else {
                     this.setState({
-                        activeMarker: cMarker
+                        activeMarker: cMarker,
+                        selectedIndex: index
                     });
                 }
             });
     };
 
     render() {
-        // console.log(this.state.filtered);
         return (
             <div className="App">
                 <ListDrawer
@@ -145,6 +143,7 @@ class App extends Component {
                     toggleDrawer={this.listDrawerToggle}
                     filterLocations={this.queryUpdate}
                     listDrawerItemClick={this.listDrawerItemClick}
+                    selectedIndex={this.state.selectedIndex}
                 />
                 <MapDisplay
                     lat={this.state.lat}
