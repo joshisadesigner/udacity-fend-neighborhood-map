@@ -37,8 +37,7 @@ class App extends Component {
         filtered: locations,
         activeMarker: {},
         open: false,
-        selectedIndex: -1,
-        showingInfoWindow: false
+        selectedIndex: -1
     };
 
     componentDidMount = () => {
@@ -82,7 +81,6 @@ class App extends Component {
     closeInfoWindow = () => {
         let aMarker = { visible: false };
         this.setState({
-            showingInfoWindow: false,
             activeMarker: aMarker,
             selectedIndex: -1
         });
