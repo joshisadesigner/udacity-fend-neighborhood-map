@@ -90,18 +90,6 @@ class App extends Component {
     };
 
     /**
-     * @description Search information for the selected restaurant
-     * @param props, object
-     * @returns object - Foursquare information
-     */
-    getBusinessInfo = (props, data) => {
-        return data.response.venues.filter(
-            item =>
-                item.name.includes(props.name) || props.name.includes(item.name)
-        );
-    };
-
-    /**
      * @description Set states to clear selected active marker and close info window
      * @param none
      * @returns State
@@ -112,6 +100,18 @@ class App extends Component {
             activeMarker: aMarker,
             selectedIndex: -1
         });
+    };
+
+    /**
+     * @description Search information for the selected restaurant
+     * @param props, object
+     * @returns object - Foursquare information
+     */
+    getBusinessInfo = (props, data) => {
+        return data.response.venues.filter(
+            item =>
+                item.name.includes(props.name) || props.name.includes(item.name)
+        );
     };
 
     /**
