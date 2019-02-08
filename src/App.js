@@ -15,14 +15,7 @@ import {
     faUtensils
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(
-    faSearch,
-    faBars,
-    faStar,
-    faStarHalfAlt,
-    faUtensils,
-    faFoursquare
-);
+library.add(faSearch, faBars, faStar, faStarHalfAlt, faUtensils, faFoursquare);
 
 const FQ_CLIENT = 'SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ';
 const FQ_SECRET = 'TUQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D';
@@ -173,8 +166,7 @@ class App extends Component {
                         selectedIndex: index
                     });
                 }
-            })
-            .catch(error => console.error(error));
+            });
     };
 
     render() {
