@@ -12,15 +12,15 @@ import {
     faBars,
     faStar,
     faStarHalfAlt,
-    faUtensilsAlt
-} from '@fortawesome/pro-solid-svg-icons';
+    faUtensils
+} from '@fortawesome/free-solid-svg-icons';
 
 library.add(
     faSearch,
     faBars,
     faStar,
     faStarHalfAlt,
-    faUtensilsAlt,
+    faUtensils,
     faFoursquare
 );
 

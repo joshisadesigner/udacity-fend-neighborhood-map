@@ -4,7 +4,7 @@ import IconButton from './IconButton';
 import {
     faStar,
     faStarHalfAlt,
-    faUtensilsAlt
+    faUtensils
 } from '@fortawesome/pro-solid-svg-icons';
 
 class ListDrawer extends Component {
@@ -83,7 +83,7 @@ class ListDrawer extends Component {
                                     }}
                                 >
                                     <div className="item-icon">
-                                        <FontAwesomeIcon icon={faUtensilsAlt} />
+                                        <FontAwesomeIcon icon={faUtensils} />
                                     </div>
                                     <div>
                                         <h4 className="item-name">
