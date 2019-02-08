@@ -21,6 +21,16 @@ const FQ_CLIENT = 'SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ';
 const FQ_SECRET = 'TUQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D';
 const FQ_VERSION = '20180115';
 
+/*
+
+https://api.foursquare.com/v2/venues/search?client_id=SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ&client_secret=UQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D&v=20180115&radius=100&ll=52.3728097,4.8751014&llAcc=100
+
+https://api.foursquare.com/v2/venues/search?client_id=SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ&client_secret=UQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D&v=20180115&radius=100&ll=52.3728097,4.8751014
+
+
+venues/search?client_id=SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ&client_secret=UQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D&v=20180115&ll=52.3728097,4.8751014&ne=52.3840327,4.8758075&sw=52.3567711,4.9050327
+
+*/
 class App extends Component {
     state = {
         lat: 52.3728097,
@@ -42,6 +52,7 @@ class App extends Component {
         this.setState({
             filtered: this.filterLocations(this.state.all, '')
         });
+        this.getApiInfo(this.state.all);
     };
 
     /**
@@ -102,6 +113,22 @@ class App extends Component {
         });
     };
 
+    buildRequest = () => {
+        // let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&radius=100&ll=${
+        //     location.location.lat
+        //     },${location.location.lng}&llAcc=100`;
+        let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&ll=${
+            this.state.lat
+        },${this.state.lng}&ne=52.3840327,4.8758075&sw=52.3567711,4.9050327`;
+        let headers = new Headers();
+        let request = new Request(url, {
+            method: 'GET',
+            headers
+        });
+
+        return request;
+    };
+
     /**
      * @description Search information for the selected restaurant
      * @param props, object
@@ -114,6 +141,16 @@ class App extends Component {
         );
     };
 
+    getApiInfo = locations => {
+        let request = this.buildRequest();
+        console.log(request);
+        let data = locations.map(location => {
+            return location.name;
+        });
+
+        return data;
+    };
+
     /**
      * @description Calls Foursquare api to generate restaurant image and information for selected marker
      * @param   Numeric, event
@@ -124,15 +161,8 @@ class App extends Component {
         this.closeInfoWindow();
 
         let props = this.state.filtered[index];
-
-        let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&radius=100&ll=${
-            props.location.lat
-        },${props.location.lng}&llAcc=100`;
-        let headers = new Headers();
-        let request = new Request(url, {
-            method: 'GET',
-            headers
-        });
+        let request = this.buildRequest(props);
+        // console.log('request ', request);
 
         // temp variable to store props and add info
         let cMarker = props;
