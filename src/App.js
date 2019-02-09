@@ -142,12 +142,9 @@ class App extends Component {
     getApiInfo = locations => {
         let info = locations.map(location => {
             let request = this.buildRequest(location.location);
-
-            // return this.fetch(request, location);
-            this.fetch(request, location);
-            return request;
+            let restaurant = this.fetch(request, location);
+            return restaurant;
         });
-
         return info;
     };
 
@@ -155,8 +152,8 @@ class App extends Component {
         fetch(request)
             .then(response => response.json())
             .then(result => {
-                let restaurant = this.getBusinessInfo(location, result);
-                console.log(restaurant);
+                let venue = this.getBusinessInfo(location, result);
+                return venue[0]
             });
     };
 

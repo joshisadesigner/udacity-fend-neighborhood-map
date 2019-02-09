@@ -59,8 +59,8 @@
         "country": "Netherlands",
         "url": "http://casanostrakitchen.nl/nuovosito/",
         "location": {
-            "lat": 52.3556343,
-            "lng": 4.90085
+            "lat": 52.3554572948612,
+            "lng": 4.90315903
         },
         "rating": 8.6
     },
@@ -72,8 +72,8 @@
         "country": "Netherlands",
         "url": "https://bakrestaurant.nl",
         "location": {
-            "lat": 52.3903058,
-            "lng": 4.8849932
+            "lat": 52.390432142576856,
+            "lng": 4.887080
         },
         "rating": 9.0
     },
@@ -98,8 +98,8 @@
         "country": "Netherlands",
         "url": "http://www.restaurantstork.nl",
         "location": {
-            "lat": 52.3789723,
-            "lng": 4.9045708
+            "lat": 52.38217574223757,
+            "lng": 4.92032524
         },
         "rating": 8.3
     }
