@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { InfoWindow } from 'google-maps-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFoursquare } from '@fortawesome/free-brands-svg-icons';
+import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
 
 class MarkerInfo extends Component {
     isvisible = name => {
@@ -10,11 +11,29 @@ class MarkerInfo extends Component {
         }
     };
 
+    /**
+     * @description Create an array of Font Awesome star icons
+     * @param Numeric
+     * @returns Array
+     */
+    ratingStars = r => {
+        let stars = [];
+        for (let i = 0; i < r; i++) {
+            if (r - i > 1) {
+                stars.push(<FontAwesomeIcon icon={faStar} key={i} />);
+            } else {
+                stars.push(<FontAwesomeIcon icon={faStarHalfAlt} key={i} />);
+            }
+        }
+        return stars;
+    };
+
     render() {
         const {
             name,
             url,
             images,
+            rating,
             activeMarker: { name: activeName }
         } = this.props;
 
@@ -22,6 +41,12 @@ class MarkerInfo extends Component {
             <InfoWindow {...this.props} visible={name === activeName}>
                 <div>
                     {name && <h4>{name}</h4>}
+                    {rating && (
+                        <p className="item-rate">
+                            {rating}
+                            {this.ratingStars(rating)}
+                        </p>
+                    )}
                     {url && (
                         <p>
                             <a

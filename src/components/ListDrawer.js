@@ -89,6 +89,16 @@ class ListDrawer extends Component {
                                         <h4 className="item-name">
                                             {location.name}
                                         </h4>
+                                        {location.location && (
+                                            <p className="item-address">
+                                                {location.location.address &&
+                                                    location.location.address}
+                                                &nbsp;
+                                                {location.location.postalCode &&
+                                                    location.location
+                                                        .postalCode}
+                                            </p>
+                                        )}
                                         <p className="item-rate">
                                             {location.rating}
                                             {this.ratingStars(location.rating)}

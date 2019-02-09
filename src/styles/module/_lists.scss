@@ -26,6 +26,11 @@
         text-align: left;
         font-weight: normal;
     }
+
+    &-address {
+        font-size: 14px;
+        color: #444;
+    }
     
     &-rate {
         display: flex;
@@ -55,6 +60,11 @@
             .item-name {
                 color: #fff;
             }
+
+            .item-address {
+                font-size: 14px;
+                color: #fff;
+            }
         }
 
         &:active {
@@ -66,6 +76,11 @@
             background: #ff6e00;
 
             .item-icon {
+                color: #fff;
+            }
+
+            .item-address {
+                font-size: 14px;
                 color: #fff;
             }
 

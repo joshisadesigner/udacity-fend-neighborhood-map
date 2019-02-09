@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import locations from './data/locations.json';
 import MapDisplay from './components/MapDisplay';
 import ListDrawer from './components/ListDrawer';
+import { foursquareVenues, venueDetails } from './components/foursquareVenues';
 import {
     FS_CLIENT,
     FS_SECRET,
     FS_VERSION,
     FS_URL,
     FS_R,
-    FS_A
+    FS_A,
+    FS_CAT
 } from './components/apiCredentials';
 
 import './styles/main.scss';
@@ -25,17 +27,6 @@ import {
 
 library.add(faSearch, faBars, faStar, faStarHalfAlt, faUtensils, faFoursquare);
 
-/*
-
-https://api.foursquare.com/v2/venues/search?client_id=SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ&client_secret=UQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D&v=20180115&radius=100&ll=52.3728097,4.8751014&llAcc=100
-
-https://api.foursquare.com/v2/venues/search?client_id=SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ&client_secret=UQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D&v=20180115&radius=100&ll=52.3728097,4.8751014
-
-https://api.foursquare.com/v2/venues/search?categoryId=4d4b7105d754a06374d81259&near=amsterdam&limit=50
-
-venues/search?client_id=SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ&client_secret=UQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D&v=20180115&ll=52.3728097,4.8751014&ne=52.3840327,4.8758075&sw=52.3567711,4.9050327
-
-*/
 class App extends Component {
     state = {
         lat: 52.3728097,
@@ -45,7 +36,8 @@ class App extends Component {
         filtered: locations,
         activeMarker: {},
         open: false,
-        selectedIndex: -1
+        selectedIndex: -1,
+        venues: []
     };
 
     /**
@@ -54,10 +46,11 @@ class App extends Component {
      * @returns State
      */
     componentDidMount = () => {
-        this.setState({
-            filtered: this.filterLocations(this.state.all, '')
-        });
-        this.getApiInfo(this.state.all);
+        foursquareVenues(`${this.state.lat},${this.state.lng}`).then(res =>
+            this.setState({
+                venues: res
+            })
+        );
     };
 
     /**
@@ -119,7 +112,7 @@ class App extends Component {
     };
 
     buildRequest = location => {
-        let url = `${FS_URL}search?client_id=${FS_CLIENT}&client_secret=${FS_SECRET}&v=${FS_VERSION}&radius=${FS_R}&ll=${
+        let url = `${FS_URL}search?client_id=${FS_CLIENT}&client_secret=${FS_SECRET}&v=${FS_VERSION}&categoryId=${FS_CAT}&radius=${FS_R}&ll=${
             location.lat
         },${location.lng}&llAcc=${FS_A}`;
         let headers = new Headers();
@@ -127,7 +120,6 @@ class App extends Component {
             method: 'GET',
             headers
         });
-
         return request;
     };
 
@@ -151,6 +143,7 @@ class App extends Component {
     };
 
     fetch = (request, location) => {
+        // let venues = [];
         fetch(request)
             .then(response => {
                 if (!response.ok) {
@@ -159,8 +152,9 @@ class App extends Component {
             })
             .then(result => {
                 let venue = this.getBusinessInfo(location, result);
-                console.log(venue[0]);
-                return venue[0];
+                console.log(venue);
+
+                return venue;
             });
     };
 
@@ -173,54 +167,70 @@ class App extends Component {
         // close info window set states to close any info window
         this.closeInfoWindow();
 
-        let props = this.state.filtered[index];
-        let request = this.buildRequest(props.location);
+        let props = this.state.venues[index];
+        // let request = this.buildRequest(props.location);
         // console.log('request ', request);
 
         // temp variable to store props and add info
-        let cMarker = props;
+        // let cMarker = props;
+        let markerActive = {};
+        venueDetails(props).then(detail => {
+            markerActive = detail.response.venue;
 
-        fetch(request)
-            .then(response => response.json())
-            .then(result => {
-                let restaurant = this.getBusinessInfo(props, result);
-
-                // add foursquare data to temp variable
-                cMarker.foursquare = restaurant[0];
-
-                if (cMarker.foursquare) {
-                    let url = `${FS_URL}${
-                        restaurant[0].id
-                    }/photos?client_id=${FS_CLIENT}&client_secret=${FS_SECRET}&v=${FS_VERSION}`;
-                    fetch(url)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw response;
-                            } else return response.json();
-                        })
-                        .then(result => {
-                            // add foursquare image to temp variable
-                            cMarker.images = result.response.photos;
-
-                            this.setState({
-                                activeMarker: cMarker,
-                                selectedIndex: index
-                            });
-                        });
-                } else {
-                    this.setState({
-                        activeMarker: cMarker,
-                        selectedIndex: index
-                    });
-                }
+            this.setState({
+                activeMarker: markerActive,
+                selectedIndex: index
             });
+        });
+
+        // fetch(request)
+        //     .then(response => response.json())
+        //     .then(result => {
+        //         let restaurant = this.getBusinessInfo(props, result);
+
+        //         // add foursquare data to temp variable
+        //         cMarker.foursquare = restaurant[0];
+
+        //         if (cMarker.foursquare) {
+        //             let url = `${FS_URL}${
+        //                 restaurant[0].id
+        //             }/photos?client_id=${FS_CLIENT}&client_secret=${FS_SECRET}&v=${FS_VERSION}`;
+        //             fetch(url)
+        //                 .then(response => {
+        //                     if (!response.ok) {
+        //                         throw response;
+        //                     } else return response.json();
+        //                 })
+        //                 .then(result => {
+        //                     // add foursquare image to temp variable
+        //                     cMarker.images = result.response.photos;
+
+        //                     this.setState({
+        //                         activeMarker: cMarker,
+        //                         selectedIndex: index
+        //                     });
+        //                 });
+        //         } else {
+        //             this.setState({
+        //                 activeMarker: cMarker,
+        //                 selectedIndex: index
+        //             });
+        //         }
+        //     });
+    };
+
+    setVenues = venues => {
+        this.setState({
+            venues: venues
+        });
     };
 
     render() {
-        return (
+        const { venues } = this.state;
+        return venues.length ? (
             <div className="App">
                 <ListDrawer
-                    locations={this.state.filtered}
+                    locations={this.state.venues}
                     open={this.state.open}
                     toggleDrawer={this.listDrawerToggle}
                     filterLocations={this.queryUpdate}
@@ -231,11 +241,23 @@ class App extends Component {
                     lat={this.state.lat}
                     lng={this.state.lng}
                     zoom={this.state.zoom}
-                    locations={this.state.filtered}
+                    locations={this.state.venues}
                     activeMarker={this.state.activeMarker}
                     closeInfoWindow={this.closeInfoWindow}
                     showInfoWindow={this.showInfoWindow}
+                    setVenues={this.setVenues}
                 />
+            </div>
+        ) : (
+            <div>
+                <div className="loader">
+                    <div className="loader-rings">
+                        <div />
+                        <div />
+                        <div />
+                        <div />
+                    </div>
+                </div>
             </div>
         );
     }

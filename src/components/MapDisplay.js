@@ -68,14 +68,18 @@ class MapDisplay extends Component {
                 className="content"
             >
                 {locations.map(
-                    ({ location, name, url, visible, images }, index) => (
+                    (
+                        { location, name, url, images, rating, visible },
+                        index
+                    ) => (
                         <Marker
                             key={index}
                             position={location}
                             onClick={this.onMarkerClick(index)}
                             name={name}
-                            images={images}
                             url={url}
+                            images={images}
+                            rating={rating}
                             animation={this.setAnimation(name)}
                             visible={visible}
                             activeMarker={activeMarker}
