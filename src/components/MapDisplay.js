@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { MAP_KEY } from './apiCredentials';
 import Marker from './Marker';
 import MapDisplayLoader from './MapDisplayLoader';
-
-const MAP_KEY = 'AIzaSyAVSL9eG92K3W19jt0uIpoxW_lZGPdxfJs';
 
 class MapDisplay extends Component {
     mapReady = (props, map) => {

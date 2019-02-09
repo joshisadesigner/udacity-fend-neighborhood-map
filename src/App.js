@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import locations from './data/locations.json';
 import MapDisplay from './components/MapDisplay';
 import ListDrawer from './components/ListDrawer';
+import {
+    FS_CLIENT,
+    FS_SECRET,
+    FS_VERSION,
+    FS_URL,
+    FS_R,
+    FS_A
+} from './components/apiCredentials';
 
 import './styles/main.scss';
 
@@ -16,10 +24,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faSearch, faBars, faStar, faStarHalfAlt, faUtensils, faFoursquare);
-
-const FQ_CLIENT = 'SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ';
-const FQ_SECRET = 'TUQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D';
-const FQ_VERSION = '20180115';
 
 /*
 
@@ -115,9 +119,9 @@ class App extends Component {
     };
 
     buildRequest = location => {
-        let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&radius=100&ll=${
+        let url = `${FS_URL}search?client_id=${FS_CLIENT}&client_secret=${FS_SECRET}&v=${FS_VERSION}&radius=${FS_R}&ll=${
             location.lat
-        },${location.lng}&llAcc=100`;
+        },${location.lng}&llAcc=${FS_A}`;
         let headers = new Headers();
         let request = new Request(url, {
             method: 'GET',
@@ -140,20 +144,23 @@ class App extends Component {
     };
 
     getApiInfo = locations => {
-        let info = locations.map(location => {
+        locations.map(location => {
             let request = this.buildRequest(location.location);
-            let restaurant = this.fetch(request, location);
-            return restaurant;
+            return this.fetch(request, location);
         });
-        return info;
     };
 
     fetch = (request, location) => {
         fetch(request)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw response;
+                } else return response.json();
+            })
             .then(result => {
                 let venue = this.getBusinessInfo(location, result);
-                return venue[0]
+                console.log(venue[0]);
+                return venue[0];
             });
     };
 
@@ -182,15 +189,18 @@ class App extends Component {
                 cMarker.foursquare = restaurant[0];
 
                 if (cMarker.foursquare) {
-                    let url = `https://api.foursquare.com/v2/venues/${
+                    let url = `${FS_URL}${
                         restaurant[0].id
-                    }/photos?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}`;
+                    }/photos?client_id=${FS_CLIENT}&client_secret=${FS_SECRET}&v=${FS_VERSION}`;
                     fetch(url)
-                        .then(response => response.json())
+                        .then(response => {
+                            if (!response.ok) {
+                                throw response;
+                            } else return response.json();
+                        })
                         .then(result => {
                             // add foursquare image to temp variable
                             cMarker.images = result.response.photos;
-                            console.log(cMarker);
 
                             this.setState({
                                 activeMarker: cMarker,
