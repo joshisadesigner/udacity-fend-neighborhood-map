@@ -27,6 +27,7 @@ https://api.foursquare.com/v2/venues/search?client_id=SKTI3V3SYKOFYXRZ4DZOWF0VZY
 
 https://api.foursquare.com/v2/venues/search?client_id=SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ&client_secret=UQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D&v=20180115&radius=100&ll=52.3728097,4.8751014
 
+https://api.foursquare.com/v2/venues/search?categoryId=4d4b7105d754a06374d81259&near=amsterdam&limit=50
 
 venues/search?client_id=SKTI3V3SYKOFYXRZ4DZOWF0VZY042TFGWY4VPF224ROTIICZ&client_secret=UQKX2TKJRN2D1G5RKBCCQQBIZUWC4UDA1RTVUS4EHUHGH2D&v=20180115&ll=52.3728097,4.8751014&ne=52.3840327,4.8758075&sw=52.3567711,4.9050327
 
@@ -113,13 +114,10 @@ class App extends Component {
         });
     };
 
-    buildRequest = () => {
-        // let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&radius=100&ll=${
-        //     location.location.lat
-        //     },${location.location.lng}&llAcc=100`;
-        let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&ll=${
-            this.state.lat
-        },${this.state.lng}&ne=52.3840327,4.8758075&sw=52.3567711,4.9050327`;
+    buildRequest = location => {
+        let url = `https://api.foursquare.com/v2/venues/search?client_id=${FQ_CLIENT}&client_secret=${FQ_SECRET}&v=${FQ_VERSION}&radius=100&ll=${
+            location.lat
+        },${location.lng}&llAcc=100`;
         let headers = new Headers();
         let request = new Request(url, {
             method: 'GET',
@@ -142,13 +140,24 @@ class App extends Component {
     };
 
     getApiInfo = locations => {
-        let request = this.buildRequest();
-        console.log(request);
-        let data = locations.map(location => {
-            return location.name;
+        let info = locations.map(location => {
+            let request = this.buildRequest(location.location);
+
+            // return this.fetch(request, location);
+            this.fetch(request, location);
+            return request;
         });
 
-        return data;
+        return info;
+    };
+
+    fetch = (request, location) => {
+        fetch(request)
+            .then(response => response.json())
+            .then(result => {
+                let restaurant = this.getBusinessInfo(location, result);
+                console.log(restaurant);
+            });
     };
 
     /**
@@ -161,7 +170,7 @@ class App extends Component {
         this.closeInfoWindow();
 
         let props = this.state.filtered[index];
-        let request = this.buildRequest(props);
+        let request = this.buildRequest(props.location);
         // console.log('request ', request);
 
         // temp variable to store props and add info
@@ -184,6 +193,7 @@ class App extends Component {
                         .then(result => {
                             // add foursquare image to temp variable
                             cMarker.images = result.response.photos;
+                            console.log(cMarker);
 
                             this.setState({
                                 activeMarker: cMarker,

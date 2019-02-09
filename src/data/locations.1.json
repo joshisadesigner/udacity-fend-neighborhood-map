@@ -1,6 +1,6 @@
 [
     {
-        "name": "d&a Hummus Bistro",
+        "name": "Hummus Bistro d&a",
         "street": "Westerstraat 136",
         "postal_code": "1015 MP",
         "locality": "Amsterdam",
@@ -26,7 +26,7 @@
         "rating": 9.4
     },
     {
-        "name": "Brut de Mer",
+        "name": "Brut de mer",
         "street": "Gerard Douplein 8",
         "postal_code": "1072 VE",
         "locality": "Amsterdam",
@@ -65,7 +65,7 @@
         "rating": 8.6
     },
     {
-        "name": "BAK restaurant",
+        "name": "BAK",
         "street": "Van Diemenstraat 408",
         "postal_code": "1013 CR",
         "locality": "Amsterdam",
@@ -78,7 +78,7 @@
         "rating": 9.0
     },
     {
-        "name": "Worst",
+        "name": "Worst Wijncafé",
         "street": "Barentszstraat 171",
         "postal_code": "1013 NM",
         "locality": "Amsterdam",
@@ -91,7 +91,7 @@
         "rating": 8.3
     },
     {
-        "name": "Restaurant Stork",
+        "name": "Café-Restaurant Stork",
         "street": "Gedempt Hamerkanaal 201",
         "postal_code": "1021 KP",
         "locality": "Amsterdam",
