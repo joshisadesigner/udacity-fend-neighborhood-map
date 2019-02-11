@@ -46,8 +46,12 @@ class ListDrawer extends Component {
         return (
             <div className={'drawer' + (open ? ' open' : '')}>
                 <IconButton
+                    id="menubutton"
                     hiddenName="Drawer"
                     className="drawer-button"
+                    role="button"
+                    aria-controls="menu"
+                    aria-expanded={open ? 'true' : 'false'}
                     onClick={toggleDrawer}
                 />
                 <div className="search">
@@ -57,14 +61,16 @@ class ListDrawer extends Component {
                     <input
                         id="search"
                         type="text"
+                        role="search"
+                        aria-label="Search restaurants"
                         placeholder="Search restaurants"
                         tabIndex={open ? '0' : '-1'}
                         onChange={e => this.queryUpdate(e.target.value)}
                         value={this.state.query}
                     />
                 </div>
-                <div className="list">
-                    <ul>
+                <div id="menu" aria-labelledby="menubutton" className="list">
+                    <ul role="menu">
                         {locations.map((location, index) => (
                             <li className="item" key={index}>
                                 <button
@@ -75,6 +81,7 @@ class ListDrawer extends Component {
                                             : '')
                                     }
                                     tabIndex={open ? '0' : '-1'}
+                                    role="menuitem"
                                     onClick={e => {
                                         this.props.listDrawerItemClick(
                                             index,
@@ -90,12 +97,12 @@ class ListDrawer extends Component {
                                             {location.name}
                                         </h4>
                                         {location.location && (
-                                            <p className="item-address">{location.location.address &&
+                                            <p className="item-address">
+                                                {location.location.address &&
                                                     location.location.address.trim()}
                                                 &nbsp;
                                                 {location.location.postalCode &&
-                                                    location.location
-                                                        .postalCode.trim()}
+                                                    location.location.postalCode.trim()}
                                             </p>
                                         )}
                                         <p className="item-rate">
