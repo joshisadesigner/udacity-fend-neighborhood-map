@@ -42,7 +42,6 @@ class ListDrawer extends Component {
 
     render = () => {
         const { locations, open, toggleDrawer } = this.props;
-        console.log(locations)
 
         return (
             <div className={'drawer' + (open ? ' open' : '')}>
@@ -91,13 +90,12 @@ class ListDrawer extends Component {
                                             {location.name}
                                         </h4>
                                         {location.location && (
-                                            <p className="item-address">
-                                                {location.location.address &&
-                                                    location.location.address}
+                                            <p className="item-address">{location.location.address &&
+                                                    location.location.address.trim()}
                                                 &nbsp;
                                                 {location.location.postalCode &&
                                                     location.location
-                                                        .postalCode}
+                                                        .postalCode.trim()}
                                             </p>
                                         )}
                                         <p className="item-rate">

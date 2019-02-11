@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import locations from './data/locations.json';
 import MapDisplay from './components/MapDisplay';
 import ListDrawer from './components/ListDrawer';
 import { foursquareVenues, venueDetails } from './components/foursquareVenues';
@@ -32,12 +31,11 @@ class App extends Component {
         lat: 52.3728097,
         lng: 4.8751014,
         zoom: 13,
-        // all: locations,
+        venues: [],
         filtered: [],
         activeMarker: {},
         open: false,
-        selectedIndex: -1,
-        venues: []
+        selectedIndex: -1
     };
 
     /**
@@ -173,6 +171,7 @@ class App extends Component {
 
         venueDetails(props).then(detail => {
             markerActive = detail.response.venue;
+            markerActive.index = index;
 
             this.setState({
                 activeMarker: markerActive,
@@ -189,8 +188,6 @@ class App extends Component {
 
     render() {
         const { filtered, venues } = this.state;
-
-        console.log(venues)
         
         return venues.length ? (
             <div className="App">

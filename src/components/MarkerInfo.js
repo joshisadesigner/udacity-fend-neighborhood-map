@@ -31,12 +31,14 @@ class MarkerInfo extends Component {
     render() {
         const {
             name,
+            index,
             activeMarker,
+            activeMarker: { index: activeIndex },
             activeMarker: { name: activeName }
         } = this.props;
 
         return (
-            <InfoWindow {...this.props} visible={name === activeName}>
+            <InfoWindow {...this.props} visible={name === activeName && index === activeIndex }>
                 <div>
                     {activeMarker.name && <h4>{activeMarker.name}</h4>}
                     {activeMarker.rating && (
@@ -57,13 +59,13 @@ class MarkerInfo extends Component {
                             </a>
                         </p>
                     )}
-                    {activeMarker.images && (
+                    {activeMarker.bestPhoto && (
                         <figure className="img-marker">
                             <figcaption>Image from foursquare.</figcaption>
                             <img
                                 alt={'Image of ' + activeMarker.name + ' from foursquare.'}
                                 src={
-                                    activeMarker.bestPhoto.prefix +
+                                    activeMarker.bestPhoto.prefix + '100' +
                                     activeMarker.bestPhoto.suffix
                                 }
                             />

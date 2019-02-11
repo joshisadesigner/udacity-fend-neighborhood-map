@@ -14,8 +14,8 @@ class MapDisplay extends Component {
      * @param string - name of the restaurant
      * @returns Number
      */
-    setAnimation = markerName => {
-        if (markerName === this.props.activeMarker.name) {
+    setAnimation = markerIndex => {
+        if (markerIndex === this.props.activeMarker.index) {
             return '1';
         } else {
             return '2';
@@ -77,7 +77,8 @@ class MapDisplay extends Component {
                             position={location}
                             onClick={this.onMarkerClick(index)}
                             name={name}
-                            animation={this.setAnimation(name)}
+                            index={index}
+                            animation={this.setAnimation(index)}
                             visible={visible}
                             activeMarker={activeMarker}
                             showInfoWindow={showInfoWindow}
