@@ -1,0 +1,11 @@
+.message {
+    &_error {
+        position: absolute;
+        z-index: 1;
+        padding: 15px;
+        width: 100%;
+        text-align: center;
+        color: #fff;
+        background: rgba(0, 0, 0, .6);
+    }
+}
