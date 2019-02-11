@@ -180,15 +180,9 @@ class App extends Component {
         });
     };
 
-    setVenues = venues => {
-        this.setState({
-            venues: venues
-        });
-    };
-
     render() {
         const { filtered, venues } = this.state;
-        
+
         return venues.length ? (
             <div className="App">
                 <ListDrawer
@@ -207,7 +201,6 @@ class App extends Component {
                     activeMarker={this.state.activeMarker}
                     closeInfoWindow={this.closeInfoWindow}
                     showInfoWindow={this.showInfoWindow}
-                    // setVenues={this.setVenues}
                 />
             </div>
         ) : (
