@@ -32,7 +32,7 @@ npm run build
 
 ## Service Worker
 
-Create-react-app bundles a service worker by default, when you run `npm run build` the service-worker.js file hsa been generated.
+Service-worker works only in build, create-react-app bundles a service worker by default, when you run `npm run build` the service-worker.js file hsa been generated.
 
 ### Dependencies
 
