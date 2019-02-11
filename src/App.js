@@ -43,7 +43,9 @@ class App extends Component {
                 });
             })
             .catch(error => {
-                console.log('There was an error ' + error);
+                console.log(
+                    `Sorr! We were unable to load restaurants at this moment...`
+                );
             });
     };
 
@@ -129,9 +131,9 @@ class App extends Component {
     };
 
     render() {
-        const { filtered, venues } = this.state;
+        const { filtered } = this.state;
 
-        return venues.length ? (
+        return (
             <div className="App">
                 <ListDrawer
                     locations={filtered}
@@ -150,17 +152,6 @@ class App extends Component {
                     closeInfoWindow={this.closeInfoWindow}
                     showInfoWindow={this.showInfoWindow}
                 />
-            </div>
-        ) : (
-            <div>
-                <div className="loader">
-                    <div className="loader-rings">
-                        <div />
-                        <div />
-                        <div />
-                        <div />
-                    </div>
-                </div>
             </div>
         );
     }
