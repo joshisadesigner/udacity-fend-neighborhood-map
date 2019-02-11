@@ -22,6 +22,18 @@ Run the aplication
 npm start
 ```
 
+## How to build application
+
+To run application with minified code
+
+```shell
+npm run build
+```
+
+## Service Worker
+
+Create-react-app bundles a service worker by default, when you run `npm run build` the service-worker.js file hsa been generated.
+
 ### Dependencies
 
 The following dependencies have been used to complete this project.
