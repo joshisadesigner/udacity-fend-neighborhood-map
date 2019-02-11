@@ -42,3 +42,4 @@ The application is easy to use, it shows a map a list and markers on the map, th
 -   Stackoverflow
 -   [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/tutorial)
 -   [Google-maps-react](https://github.com/fullstackreact/google-maps-react)
+-   [Foursquare Places API](https://developer.foursquare.com/places-api)
