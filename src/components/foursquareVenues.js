@@ -35,9 +35,17 @@ export const foursquareVenues = center => {
             venues.sort(sort);
 
             return venues;
+        })
+        .catch(error => {
+            console.log('There was an error ' + error);
         });
 };
 
+/**
+ * @description Search information for the selected restaurant
+ * @param array
+ * @returns array - Foursquare information
+ */
 export const venueDetails = venue => {
     let url = `${FS_URL}${
         venue.id

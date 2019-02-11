@@ -2,15 +2,6 @@ import React, { Component } from 'react';
 import MapDisplay from './components/MapDisplay';
 import ListDrawer from './components/ListDrawer';
 import { foursquareVenues, venueDetails } from './components/foursquareVenues';
-import {
-    FS_CLIENT,
-    FS_SECRET,
-    FS_VERSION,
-    FS_URL,
-    FS_R,
-    FS_A,
-    FS_CAT
-} from './components/apiCredentials';
 
 import './styles/main.scss';
 
@@ -44,12 +35,16 @@ class App extends Component {
      * @returns State
      */
     componentDidMount = () => {
-        foursquareVenues(`${this.state.lat},${this.state.lng}`).then(res =>
-            this.setState({
-                venues: res,
-                filtered: this.filterLocations(res, '')
+        foursquareVenues(`${this.state.lat},${this.state.lng}`)
+            .then(res => {
+                this.setState({
+                    venues: res,
+                    filtered: this.filterLocations(res, '')
+                });
             })
-        );
+            .catch(error => {
+                console.log('There was an error ' + error);
+            });
     };
 
     /**
@@ -108,53 +103,6 @@ class App extends Component {
             activeMarker: aMarker,
             selectedIndex: -1
         });
-    };
-
-    buildRequest = location => {
-        let url = `${FS_URL}search?client_id=${FS_CLIENT}&client_secret=${FS_SECRET}&v=${FS_VERSION}&categoryId=${FS_CAT}&radius=${FS_R}&ll=${
-            location.lat
-        },${location.lng}&llAcc=${FS_A}`;
-        let headers = new Headers();
-        let request = new Request(url, {
-            method: 'GET',
-            headers
-        });
-        return request;
-    };
-
-    /**
-     * @description Search information for the selected restaurant
-     * @param props, object
-     * @returns object - Foursquare information
-     */
-    getBusinessInfo = (props, data) => {
-        return data.response.venues.filter(
-            item =>
-                item.name.includes(props.name) || props.name.includes(item.name)
-        );
-    };
-
-    getApiInfo = locations => {
-        locations.map(location => {
-            let request = this.buildRequest(location.location);
-            return this.fetch(request, location);
-        });
-    };
-
-    fetch = (request, location) => {
-        // let venues = [];
-        fetch(request)
-            .then(response => {
-                if (!response.ok) {
-                    throw response;
-                } else return response.json();
-            })
-            .then(result => {
-                let venue = this.getBusinessInfo(location, result);
-                console.log(venue);
-
-                return venue;
-            });
     };
 
     /**
