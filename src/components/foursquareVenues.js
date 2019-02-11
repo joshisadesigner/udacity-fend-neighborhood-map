@@ -5,7 +5,7 @@ const FS_SECRET = 'VGXMQZMTVZWXQ0SAHXCQ5RMJZ25OEAKKQUCJBI3MABO2STVU';
 const FS_VERSION = '20180115';
 const FS_URL = 'https://api.foursquare.com/v2/venues/';
 const FS_R = '2500';
-const FS_L = '50';
+const FS_L = '20';
 const FS_CAT = '4d4b7105d754a06374d81259';
 
 const sort = (a, b) => {

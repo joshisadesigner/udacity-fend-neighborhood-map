@@ -42,6 +42,7 @@ class ListDrawer extends Component {
 
     render = () => {
         const { locations, open, toggleDrawer } = this.props;
+        console.log(locations)
 
         return (
             <div className={'drawer' + (open ? ' open' : '')}>

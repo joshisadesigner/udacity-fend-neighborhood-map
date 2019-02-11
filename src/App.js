@@ -32,8 +32,8 @@ class App extends Component {
         lat: 52.3728097,
         lng: 4.8751014,
         zoom: 13,
-        all: locations,
-        filtered: locations,
+        // all: locations,
+        filtered: [],
         activeMarker: {},
         open: false,
         selectedIndex: -1,
@@ -48,7 +48,8 @@ class App extends Component {
     componentDidMount = () => {
         foursquareVenues(`${this.state.lat},${this.state.lng}`).then(res =>
             this.setState({
-                venues: res
+                venues: res,
+                filtered: this.filterLocations(res, '')
             })
         );
     };
@@ -63,7 +64,7 @@ class App extends Component {
 
         this.setState({
             selectedIndex: -1,
-            filtered: this.filterLocations(this.state.all, queryEntry)
+            filtered: this.filterLocations(this.state.venues, queryEntry)
         });
     };
 
@@ -167,13 +168,9 @@ class App extends Component {
         // close info window set states to close any info window
         this.closeInfoWindow();
 
-        let props = this.state.venues[index];
-        // let request = this.buildRequest(props.location);
-        // console.log('request ', request);
-
-        // temp variable to store props and add info
-        // let cMarker = props;
+        let props = this.state.filtered[index];
         let markerActive = {};
+
         venueDetails(props).then(detail => {
             markerActive = detail.response.venue;
 
@@ -182,41 +179,6 @@ class App extends Component {
                 selectedIndex: index
             });
         });
-
-        // fetch(request)
-        //     .then(response => response.json())
-        //     .then(result => {
-        //         let restaurant = this.getBusinessInfo(props, result);
-
-        //         // add foursquare data to temp variable
-        //         cMarker.foursquare = restaurant[0];
-
-        //         if (cMarker.foursquare) {
-        //             let url = `${FS_URL}${
-        //                 restaurant[0].id
-        //             }/photos?client_id=${FS_CLIENT}&client_secret=${FS_SECRET}&v=${FS_VERSION}`;
-        //             fetch(url)
-        //                 .then(response => {
-        //                     if (!response.ok) {
-        //                         throw response;
-        //                     } else return response.json();
-        //                 })
-        //                 .then(result => {
-        //                     // add foursquare image to temp variable
-        //                     cMarker.images = result.response.photos;
-
-        //                     this.setState({
-        //                         activeMarker: cMarker,
-        //                         selectedIndex: index
-        //                     });
-        //                 });
-        //         } else {
-        //             this.setState({
-        //                 activeMarker: cMarker,
-        //                 selectedIndex: index
-        //             });
-        //         }
-        //     });
     };
 
     setVenues = venues => {
@@ -226,11 +188,14 @@ class App extends Component {
     };
 
     render() {
-        const { venues } = this.state;
+        const { filtered, venues } = this.state;
+
+        console.log(venues)
+        
         return venues.length ? (
             <div className="App">
                 <ListDrawer
-                    locations={this.state.venues}
+                    locations={filtered}
                     open={this.state.open}
                     toggleDrawer={this.listDrawerToggle}
                     filterLocations={this.queryUpdate}
@@ -241,11 +206,11 @@ class App extends Component {
                     lat={this.state.lat}
                     lng={this.state.lng}
                     zoom={this.state.zoom}
-                    locations={this.state.venues}
+                    locations={filtered}
                     activeMarker={this.state.activeMarker}
                     closeInfoWindow={this.closeInfoWindow}
                     showInfoWindow={this.showInfoWindow}
-                    setVenues={this.setVenues}
+                    // setVenues={this.setVenues}
                 />
             </div>
         ) : (

@@ -31,27 +31,25 @@ class MarkerInfo extends Component {
     render() {
         const {
             name,
-            url,
-            images,
-            rating,
+            activeMarker,
             activeMarker: { name: activeName }
         } = this.props;
 
         return (
             <InfoWindow {...this.props} visible={name === activeName}>
                 <div>
-                    {name && <h4>{name}</h4>}
-                    {rating && (
+                    {activeMarker.name && <h4>{activeMarker.name}</h4>}
+                    {activeMarker.rating && (
                         <p className="item-rate">
-                            {rating}
-                            {this.ratingStars(rating)}
+                            {activeMarker.rating}
+                            {this.ratingStars(activeMarker.rating)}
                         </p>
                     )}
-                    {url && (
+                    {activeMarker.url && (
                         <p>
                             <a
                                 className="marker-info-url"
-                                href={url}
+                                href={activeMarker.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
@@ -59,15 +57,14 @@ class MarkerInfo extends Component {
                             </a>
                         </p>
                     )}
-                    {images && (
+                    {activeMarker.images && (
                         <figure className="img-marker">
                             <figcaption>Image from foursquare.</figcaption>
                             <img
-                                alt={'Image of ' + name + ' from foursquare.'}
+                                alt={'Image of ' + activeMarker.name + ' from foursquare.'}
                                 src={
-                                    images.items[0].prefix +
-                                    'cap100' +
-                                    images.items[0].suffix
+                                    activeMarker.bestPhoto.prefix +
+                                    activeMarker.bestPhoto.suffix
                                 }
                             />
                             <FontAwesomeIcon icon={faFoursquare} />

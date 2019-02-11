@@ -77,9 +77,6 @@ class MapDisplay extends Component {
                             position={location}
                             onClick={this.onMarkerClick(index)}
                             name={name}
-                            url={url}
-                            images={images}
-                            rating={rating}
                             animation={this.setAnimation(name)}
                             visible={visible}
                             activeMarker={activeMarker}
