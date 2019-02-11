@@ -35,9 +35,6 @@ export const foursquareVenues = center => {
             venues.sort(sort);
 
             return venues;
-        })
-        .catch(error => {
-            console.log('There was an error ' + error);
         });
 };
 

@@ -26,7 +26,8 @@ class App extends Component {
         filtered: [],
         activeMarker: {},
         open: false,
-        selectedIndex: -1
+        selectedIndex: -1,
+        show: false
     };
 
     /**
@@ -43,10 +44,18 @@ class App extends Component {
                 });
             })
             .catch(error => {
-                console.log(
-                    `Sorr! We were unable to load restaurants at this moment...`
-                );
+                this.setState({
+                    show: true
+                });
             });
+    };
+
+    componentWillUnmount = () => {
+        window.clearTimeout(this.state.timeout);
+    };
+
+    showMessage = () => {
+        this.setState({ show: true });
     };
 
     /**
@@ -135,6 +144,16 @@ class App extends Component {
 
         return (
             <div className="App">
+                {this.state.show ? (
+                    <div className="message_error">
+                        <h2>
+                            Sorry! We were unable to load restaurants at this
+                            moment, please try again later
+                        </h2>
+                    </div>
+                ) : (
+                    ''
+                )}
                 <ListDrawer
                     locations={filtered}
                     open={this.state.open}
